@@ -140,20 +140,23 @@ func compactionConfig(windowTokens int) *compaction.Config {
 
 // FromEnv resolves the LLM provider config:
 //
-//	ARTEX_LLM_PROVIDER = anthropic|openai (default: inferred from keys)
+//	ARTEX_LLM_PROVIDER = anthropic|openai|openai-responses|grok (default: inferred from keys)
 //	ARTEX_LLM_MODEL    = model id        (default: per provider)
 //	ARTEX_LLM_BASE_URL = endpoint        (optional)
 //	ARTEX_LLM_PROXY    = proxy URL        (optional; http/https/socks5)
-//	ANTHROPIC_API_KEY / OPENAI_API_KEY         = credentials
+//	ANTHROPIC_API_KEY / OPENAI_API_KEY / XAI_API_KEY = credentials
 func FromEnv() (Config, bool) {
 	prov := os.Getenv("ARTEX_LLM_PROVIDER")
 	anthKey := os.Getenv("ANTHROPIC_API_KEY")
 	oaiKey := os.Getenv("OPENAI_API_KEY")
+	xaiKey := os.Getenv("XAI_API_KEY")
 
 	if prov == "" {
 		switch {
 		case anthKey != "":
 			prov = "anthropic"
+		case xaiKey != "":
+			prov = "grok"
 		case oaiKey != "":
 			prov = "openai"
 		default:
@@ -165,7 +168,7 @@ func FromEnv() (Config, bool) {
 		BaseURL: os.Getenv("ARTEX_LLM_BASE_URL"),
 		Model:   os.Getenv("ARTEX_LLM_MODEL"),
 		Proxy:   strings.TrimSpace(os.Getenv("ARTEX_LLM_PROXY")),
-		// 默认流式;ARTEX_LLM_STREAM=false/0/off 显式关闭走非流式。
+		// Default streaming; set ARTEX_LLM_STREAM=false/0/off for non-streaming.
 		Stream: !isFalsy(os.Getenv("ARTEX_LLM_STREAM")),
 	}
 	switch prov {
@@ -180,6 +183,15 @@ func FromEnv() (Config, bool) {
 		c.APIKey = oaiKey
 		if c.Model == "" {
 			c.Model = "gpt-5"
+		}
+	case "grok":
+		c.Format = llm.FormatOpenAI
+		c.APIKey = xaiKey
+		if c.BaseURL == "" {
+			c.BaseURL = "https://api.x.ai/v1"
+		}
+		if c.Model == "" {
+			c.Model = "grok-4"
 		}
 	default:
 		c.Format = llm.FormatAnthropic
@@ -204,7 +216,7 @@ func ConfigFrom(provider, model, baseURL, apiKey, proxy string) Config {
 		BaseURL: strings.TrimRight(strings.TrimSpace(baseURL), "/"),
 		APIKey:  strings.TrimSpace(apiKey),
 		Proxy:   strings.TrimSpace(proxy),
-		Stream:  true, // 默认流式;调用方按 profile 覆盖
+		Stream:  true, // default streaming; caller can override from profile
 	}
 	switch strings.TrimSpace(provider) {
 	case "jev":
@@ -225,6 +237,16 @@ func ConfigFrom(provider, model, baseURL, apiKey, proxy string) Config {
 		c.BaseURL = strings.TrimRight(strings.TrimSuffix(c.BaseURL, "/responses"), "/")
 		if c.Model == "" {
 			c.Model = "gpt-5"
+		}
+	case "grok":
+		c.Format = llm.FormatOpenAI
+		if c.BaseURL == "" {
+			c.BaseURL = "https://api.x.ai/v1"
+		}
+		// provider appends "/chat/completions"; tolerate a full endpoint URL.
+		c.BaseURL = strings.TrimRight(strings.TrimSuffix(c.BaseURL, "/chat/completions"), "/")
+		if c.Model == "" {
+			c.Model = "grok-4"
 		}
 	default:
 		c.Format = llm.FormatAnthropic
@@ -271,7 +293,7 @@ func (c Config) NewProvider() (llm.Provider, error) {
 // sharing a profile must retain the same limiter outside their provider cache.
 func (c Config) NewProviderWithLimiter(limiter *RequestLimiter) (llm.Provider, error) {
 	if c.Jev {
-		return nil, fmt.Errorf("Jev System One 仅可用于拦截判定模型，不能作为聊天 provider")
+		return nil, fmt.Errorf("Jev System One is only for intercept/judge models and cannot be used as a chat provider")
 	}
 	client, err := quotaAwareHTTPClient(c.Proxy, c.SessionHeaderKey)
 	if err != nil {
