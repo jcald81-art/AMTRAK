@@ -45,7 +45,7 @@ function assertSessionPreserved(c) {
 
 test("expired Basic gate reloads the current tab and preserves the admin session", async () => {
   const c = client(async () => gateFailure());
-  await assert.rejects(c.http("/version"), /访问验证已过期/);
+  await assert.rejects(c.http("/version"), /Access verification expired/);
   assert.equal(c.state.reloads, 1);
   assert.equal(c.state.requests[0][1].headers.Authorization, "Bearer original-admin-token");
   assertSessionPreserved(c);
@@ -60,7 +60,7 @@ test("concurrent gate failures reload once and stop new polling requests", async
   const results = await Promise.allSettled(requests);
   assert.ok(results.every((r) => r.status === "rejected"));
   assert.equal(c.state.reloads, 1);
-  await assert.rejects(c.http("/tasks"), /访问验证已过期/);
+  await assert.rejects(c.http("/tasks"), /Access verification expired/);
   assert.equal(c.state.requests.length, 3);
   assertSessionPreserved(c);
 });
@@ -73,9 +73,9 @@ test("a late admin 401 cannot clear the token once gate recovery has started", a
     return gateFailure();
   });
   const staleRequest = c.http("/tasks");
-  await assert.rejects(c.http("/version"), /访问验证已过期/);
+  await assert.rejects(c.http("/version"), /Access verification expired/);
   release();
-  await assert.rejects(staleRequest, /访问验证已过期/);
+  await assert.rejects(staleRequest, /Access verification expired/);
   assert.equal(c.state.reloads, 1);
   assertSessionPreserved(c);
 });
@@ -108,7 +108,7 @@ test("uploads and downloads also recover the Basic gate", async () => {
     (c) => c.api.interceptGetToolConfig(),
   ]) {
     const c = client(async () => gateFailure());
-    await assert.rejects(action(c), /访问验证已过期/);
+    await assert.rejects(action(c), /Access verification expired/);
     assert.equal(c.state.reloads, 1);
     assertSessionPreserved(c);
   }

@@ -52,6 +52,14 @@ func TestGenerateAutoTitleCleansResponse(t *testing.T) {
 	}
 }
 
+func TestEnglishAutoTitle(t *testing.T) {
+	p := &autoTitleProvider{reply: `Title: "Project settings"`}
+	title, err := GenerateAutoTitle(t.Context(), p, "整理项目设置")
+	if err != nil || title != "Project settings" || !strings.Contains(strings.Join(p.req.System, " "), "English") {
+		t.Fatalf("unexpected title or language instruction: title=%q err=%v", title, err)
+	}
+}
+
 func TestGenerateAutoTitleProviderError(t *testing.T) {
 	_, err := GenerateAutoTitle(t.Context(), &autoTitleProvider{err: errors.New("boom")}, "内容")
 	if err == nil {

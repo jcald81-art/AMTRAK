@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation";
 
 import { useTranslation } from "react-i18next";
 
-import { LanguageSwitcher } from "@/components/language-switcher";
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { useCurrentUser } from "@/hooks/use-current-user";
@@ -89,7 +88,6 @@ function MainContentInner({ children }: { children: ReactNode }) {
               </span>
             )}
             <UpdateBadge />
-            <LanguageSwitcher />
             <LayoutControls />
             <ThemeSwitcher />
             <AccountSwitcher users={[currentUser]} />

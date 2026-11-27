@@ -152,13 +152,13 @@ let basicAuthProbe: Promise<void> | null = null;
 // Basic credentials without replacing an API request's Bearer authorization.
 // Keep the admin token and collapse concurrent failures into one reload.
 export async function apiFetch(input: string, init?: RequestInit): Promise<Response> {
-  if (basicAuthReloading) throw new Error("访问验证已过期，正在重新验证");
+  if (basicAuthReloading) throw new Error("Access verification expired. Verifying again…");
   const response = await fetch(input, init);
-  if (basicAuthReloading) throw new Error("访问验证已过期，正在重新验证");
+  if (basicAuthReloading) throw new Error("Access verification expired. Verifying again…");
   if (response.status === 401 && response.headers.get("X-Artex-Auth") === "basic") {
     basicAuthReloading = true;
     window.location.reload();
-    throw new Error("访问验证已过期，正在重新验证");
+    throw new Error("Access verification expired. Verifying again…");
   }
   return response;
 }
@@ -695,7 +695,7 @@ export const api = {
       headers: { ...(token ? { Authorization: `Bearer ${token}` } : {}) },
       body: fd,
     });
-    if (!r.ok) throw new Error(`上传失败: ${r.status}`);
+    if (!r.ok) throw new Error(`Upload failed: ${r.status}`);
     return r.json() as Promise<{ uploaded: number }>;
   },
   workspaceDownload: async (path: string) => {
@@ -708,7 +708,7 @@ export const api = {
       const r = await apiFetch(`/api/workspace/download?path=${encodeURIComponent(path)}`, {
         headers: { ...(token ? { Authorization: `Bearer ${token}` } : {}) },
       });
-      if (!r.ok) throw new Error(`下载失败: ${r.status}`);
+      if (!r.ok) throw new Error(`Download failed: ${r.status}`);
       contentDisposition = r.headers.get("Content-Disposition") ?? "";
       blob = await r.blob();
     }
@@ -948,8 +948,8 @@ export const api = {
       { headers: token ? { Authorization: `Bearer ${token}` } : {} },
     );
     if (!response.ok) {
-      const error = await response.json().catch(() => ({ error: "下载失败" }));
-      throw new Error(error.error ?? "下载失败");
+      const error = await response.json().catch(() => ({ error: "Download failed" }));
+      throw new Error(error.error ?? "Download failed");
     }
     const blob = await response.blob();
     const url = URL.createObjectURL(blob);
@@ -1213,7 +1213,7 @@ export const api = {
       // An empty demo/proxy response must enter the page's load-error path,
       // rather than crash the render when it reads kinds.find or stats.
       if (!meta || !Array.isArray(meta.kinds) || !meta.stats || !meta.defaults) {
-        throw new Error("通知配置响应不完整，请刷新后重试");
+        throw new Error("Notification settings are incomplete. Refresh and try again.");
       }
       return meta;
     }),
@@ -1290,7 +1290,7 @@ export const api = {
       headers: { ...(token ? { Authorization: `Bearer ${token}` } : {}) },
       body: fd,
     });
-    if (!r.ok) throw new Error(`上传失败: ${r.status} ${await r.text()}`);
+    if (!r.ok) throw new Error(`Upload failed: ${r.status} ${await r.text()}`);
     return r.json() as Promise<{ attachments: ChatAttachment[] }>;
   },
   stopChat: (taskId: string) => post<{ status: string }>(`/tasks/${taskId}/chat/stop`, {}),
@@ -1551,7 +1551,7 @@ export const api = {
       headers: token ? { Authorization: `Bearer ${token}` } : {},
     });
     const body = await r.json().catch(() => ({}));
-    if (!r.ok) throw new Error(body?.error || `上传失败(${r.status})`);
+    if (!r.ok) throw new Error(body?.error || `Upload failed(${r.status})`);
     return body;
   },
   deleteSkill: (name: string) => del<{ deleted: string }>(`/skills/${name}`),
