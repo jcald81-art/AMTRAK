@@ -78,7 +78,8 @@ export type FindingReport = { status: "loading" | "done" | "error"; text: string
 
 function isStructuredReproductionReport(report: string) {
   return (
-    /^##\s+(?:复现步骤|测试过程|复现过程)\s*$/im.test(report) && /^\s*(?:###\s*)?步骤\s*\d+[.、:：)）]/im.test(report)
+    /^##\s+(?:Reproduction Steps|Steps to Reproduce|复现步骤|测试过程|复现过程)\s*$/im.test(report) &&
+    /^\s*(?:###\s*)?(?:Step|步骤)\s*\d+[.、:：)）]/im.test(report)
   );
 }
 

@@ -84,7 +84,7 @@ function CaseDetail() {
   async function detach() {
     setBusy(true);
     try {
-      for (const fid of selected) await api.removeFindingCaseMember(id, fid, "人工撤销归并");
+      for (const fid of selected) await api.removeFindingCaseMember(id, fid, "Manual unmerge");
       setSelected(new Set());
       setRefresh((v) => v + 1);
       toast.success(ui("screen.05de947f40ed2d"));

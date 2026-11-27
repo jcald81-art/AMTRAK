@@ -57,7 +57,8 @@ export function createMockSchedules() {
       record(item, item.status);
       return { ok: true, enabled: item.enabled };
     }
-    if (action === "run-now" && method === "POST") throw new Error("Demo mode does not execute scheduled tasks; run in a live deployment");
+    if (action === "run-now" && method === "POST")
+      throw new Error("Demo mode does not execute scheduled tasks; run in a live deployment");
     throw new Error("Schedule not found");
   };
 }
@@ -66,14 +67,17 @@ function normalize(body: Record<string, unknown>, validTaskIDs: Set<number>): Om
   const name = String(body.name ?? "").trim();
   if (!name) throw new Error("Schedule name cannot be empty");
   const timezone_mode = body.timezone_mode ?? "beijing";
-  if (timezone_mode !== "beijing" && timezone_mode !== "system") throw new Error("Timezone must be Beijing or system timezone");
+  if (timezone_mode !== "beijing" && timezone_mode !== "system")
+    throw new Error("Timezone must be Beijing Time or System Timezone");
   const schedule_type = body.schedule_type;
-  if (schedule_type !== "once" && schedule_type !== "weekly") throw new Error("Schedule type must be once or weekly");
+  if (schedule_type !== "once" && schedule_type !== "weekly")
+    throw new Error("Schedule type must be once or weekly");
   const start_time = String(body.start_time ?? "");
   const end_time = String(body.end_time ?? "");
   const clock = /^([01]\d|2[0-3]):[0-5]\d$/;
   if (!clock.test(start_time)) throw new Error("Invalid start time format; use HH:MM");
-  if (end_time && end_time !== "24:00" && !clock.test(end_time)) throw new Error("Invalid end time format; use HH:MM");
+  if (end_time && end_time !== "24:00" && !clock.test(end_time))
+    throw new Error("Invalid end time format; use HH:MM");
   const run_date = schedule_type === "once" ? String(body.run_date ?? "") : "";
   const end_date = schedule_type === "once" ? String(body.end_date ?? "") : "";
   const weekdays = schedule_type === "weekly" && Array.isArray(body.weekdays) ? [...body.weekdays] : [];
@@ -84,18 +88,18 @@ function normalize(body: Record<string, unknown>, validTaskIDs: Set<number>): Om
     if (end_date === run_date && end_time && end_time !== "24:00" && end_time <= start_time)
       throw new Error("End time must be later than start time on the same day");
   } else {
-    if (!weekdays.length) throw new Error("Select at least one weekday for weekly schedules");
+    if (!weekdays.length) throw new Error("Select at least one day for a weekly schedule");
     if (
       weekdays.some((day) => !Number.isInteger(day) || day < 1 || day > 7) ||
       new Set(weekdays).size !== weekdays.length
     )
-      throw new Error("Weekdays must be unique values from Monday to Sunday");
+      throw new Error("Weekdays must be unique values from Monday (1) to Sunday (7)");
     weekdays.sort((left, right) => left - right);
   }
   const task_ids = Array.isArray(body.task_ids) ? [...body.task_ids] : [];
   if (task_ids.length > 100) throw new Error("Select at most 100 tasks");
   if (task_ids.some((id) => !Number.isSafeInteger(id) || id < 1) || new Set(task_ids).size !== task_ids.length)
-    throw new Error("Invalid or duplicate bound task IDs");
+    throw new Error("Invalid or duplicate task IDs");
   for (const id of task_ids) if (!validTaskIDs.has(id)) throw new Error(`Task #${id} not found`);
   return {
     name,

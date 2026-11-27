@@ -16,7 +16,7 @@ const MOCK_LOGS: LogLine[] = [
     ts: "2026-07-26T03:55:00Z",
     level: "info",
     tag: "engine",
-    text: "AMTRAK v0.1.0 backend listening on :8787 (workers=3)",
+    text: "ARTEX v0.1.0 backend listening on :8787 (workers=3)",
   },
   {
     seq: 2,
@@ -30,21 +30,21 @@ const MOCK_LOGS: LogLine[] = [
     ts: "2026-07-26T03:56:10Z",
     level: "info",
     tag: "planner",
-    text: "task t-acme-web: round 3 planning completed, spawned intent i-4",
+    text: "task t-acme-web: planning round 3, created intent i-4",
   },
   {
     seq: 4,
     ts: "2026-07-26T03:57:00Z",
     level: "warn",
     tag: "guard",
-    text: "block bash: out-of-scope target out.evil.example rejected",
+    text: "block bash: target out.evil.example is out of scope",
   },
   {
     seq: 5,
     ts: "2026-07-26T03:57:30Z",
     level: "info",
     tag: "work#1",
-    text: "report_finding: Default Credentials (high) persisted",
+    text: "report_finding: Default Credentials (high) saved",
   },
   {
     seq: 6,
