@@ -14,7 +14,7 @@ export async function proxy(request: NextRequest) {
   try {
     const backend = new URL(process.env.AUTOPENTEST_API ?? "http://localhost:8787");
     if (!["http:", "https:"].includes(backend.protocol) || backend.username || backend.password) {
-      return new NextResponse("认证后端地址配置无效", { status: 503 });
+      return new NextResponse("Invalid authentication backend URL configuration", { status: 503 });
     }
     const local = ["localhost", "127.0.0.1", "[::1]"].includes(backend.hostname);
     gate = await fetch(new URL("/api/basic-auth/check", backend), {
@@ -31,16 +31,16 @@ export async function proxy(request: NextRequest) {
       signal: AbortSignal.timeout(5000),
     });
     if (!local && gate.status === 401) {
-      return new NextResponse("远程后端已启用 HTTP Basic Auth，请通过内嵌前端访问该服务", { status: 503 });
+      return new NextResponse("Remote backend requires HTTP Basic Auth; access it via the embedded UI", { status: 503 });
     }
   } catch {
-    return new NextResponse("认证服务暂时不可用，请稍后重试", { status: 503 });
+    return new NextResponse("Authentication service is temporarily unavailable; please retry", { status: 503 });
   }
   if (!gate.ok) {
     const headers = new Headers({ "Cache-Control": "no-store", "Content-Type": "text/plain; charset=utf-8" });
     const challenge = gate.headers.get("www-authenticate");
     if (challenge) headers.set("WWW-Authenticate", challenge);
-    return new NextResponse(gate.status === 401 ? "请完成 HTTP Basic Auth 验证后刷新页面" : "认证服务暂时不可用", {
+    return new NextResponse(gate.status === 401 ? "Complete HTTP Basic Auth and refresh the page" : "Authentication service temporarily unavailable", {
       status: gate.status,
       headers,
     });
