@@ -68,7 +68,7 @@ export function FindingAutoChat({
     setRunning(false);
     setLoading(true);
     try {
-      const created = await api.createConversation(agentKey, `漏洞 #${findingId} · ${safeTitle}`);
+      const created = await api.createConversation(agentKey, `Finding #${findingId} · ${safeTitle}`);
       window.localStorage.setItem(storageKey, String(created.id));
       setConversation(created);
     } catch (error) {
@@ -84,7 +84,7 @@ export function FindingAutoChat({
       setConversation({
         id: initialConversationId,
         agent_key: agentKey,
-        title: `漏洞 #${findingId} · ${safeTitle}`,
+        title: `Finding #${findingId} · ${safeTitle}`,
         created_at: "",
         updated_at: "",
       });
@@ -95,7 +95,7 @@ export function FindingAutoChat({
       setConversation({
         id: storedID,
         agent_key: agentKey,
-        title: `漏洞 #${findingId} · ${safeTitle}`,
+        title: `Finding #${findingId} · ${safeTitle}`,
         created_at: "",
         updated_at: "",
       });

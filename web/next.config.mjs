@@ -29,6 +29,19 @@ const nextConfig = {
       ? {
           // Vercel mock demo：无后端，不需要 /api 反代。
           images: { unoptimized: true },
+          async headers() {
+            return [
+              {
+                source: "/(.*)",
+                headers: [
+                  { key: "X-Content-Type-Options", value: "nosniff" },
+                  { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+                  { key: "Strict-Transport-Security", value: "max-age=63072000" },
+                  { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
+                ],
+              },
+            ];
+          },
         }
       : {
           // 开发：把 /api/* 反代到 Go 后端（默认 :8787，可用 AUTOPENTEST_API 覆盖）。

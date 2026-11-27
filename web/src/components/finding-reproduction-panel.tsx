@@ -24,7 +24,7 @@ type ReproductionStep = {
 };
 
 function extractSection(report: string) {
-  const match = report.match(/^##\s+(?:复现步骤|测试过程|复现过程)\s*$/im);
+  const match = report.match(/^##\s+(?:Reproduction Steps|Steps to Reproduce|复现步骤|测试过程|复现过程)\s*$/im);
   if (!match || match.index === undefined) return "";
   const start = match.index + match[0].length;
   const tail = report.slice(start);
@@ -48,7 +48,7 @@ function parseSteps(report: string, fallback: string, ui: UITranslate): Reproduc
     ];
   }
 
-  const markers = [...section.matchAll(/^\s*(?:###\s*)?(?:步骤\s*)?(\d+)[.、:：)）]\s*(.+)$/gim)];
+  const markers = [...section.matchAll(/^\s*(?:###\s*)?(?:(?:Step|步骤)\s*)?(\d+)[.、:：)）]\s*(.+)$/gim)];
   if (markers.length === 0) {
     return [{ number: 1, title: ui("screen.95454d7e6d0dea"), body: withoutPacket(section) }];
   }
