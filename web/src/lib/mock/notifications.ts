@@ -44,9 +44,9 @@ export function createMockNotifications() {
     }
     if (path === "/notify/channels" && method === "POST") {
       const kind = kinds.find((entry) => entry.kind === body.kind);
-      if (!kind) throw new Error("渠道类型无效");
+      if (!kind) throw new Error("Invalid channel type");
       const name = String(body.name ?? "").trim();
-      if (!name) throw new Error("缺少渠道名称");
+      if (!name) throw new Error("Channel name is required");
       const now = new Date().toISOString();
       const channel: NotificationChannel = {
         id: nextID++,
@@ -68,9 +68,9 @@ export function createMockNotifications() {
     const match = /^\/notify\/channels\/(\d+)(\/test)?$/.exec(path);
     if (match) {
       const index = channels.findIndex((channel) => channel.id === Number(match[1]));
-      if (index < 0) throw new Error("通知渠道不存在");
+      if (index < 0) throw new Error("Notification channel not found");
       if (match[2] && method === "POST") {
-        throw new Error("演示模式不会发送真实通知，请在实际部署中测试");
+        throw new Error("Demo mode does not send real notifications; test in a live deployment");
       }
       if (!match[2] && method === "PATCH") {
         updateChannel(channels[index], body);
@@ -82,7 +82,7 @@ export function createMockNotifications() {
       }
     }
     // No generic success fallback: a nonexistent delivery cannot be retried.
-    throw new Error("演示模式中没有对应的通知记录");
+    throw new Error("No matching notification record in demo mode");
   };
 }
 

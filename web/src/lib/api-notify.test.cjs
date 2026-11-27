@@ -37,7 +37,7 @@ function client(mock, payload) {
 
 test("notification metadata rejects incomplete responses before they can crash NotifyPage", async () => {
   for (const payload of [null, {}, [], { kinds: null }, { kinds: [], stats: {} }, { kinds: [], defaults: {} }]) {
-    await assert.rejects(client(false, payload).notifyMeta(), /通知配置响应不完整/);
+    await assert.rejects(client(false, payload).notifyMeta(), /Notification settings are incomplete/);
   }
 });
 
@@ -90,8 +90,8 @@ test("the real demo transport supports notification page loading, editing and de
   assert.equal(edited.name, "Edited channel");
   assert.equal(edited.enabled, false);
   assert.equal((await api.notifyMeta()).stats.channels_on, 0);
-  await assert.rejects(api.notifyTestChannel(id), /演示模式不会发送真实通知/);
-  await assert.rejects(api.notifyRetryDelivery(999), /没有对应的通知记录/);
+  await assert.rejects(api.notifyTestChannel(id), /Demo mode does not send real notifications/);
+  await assert.rejects(api.notifyRetryDelivery(999), /No matching notification record/);
   assert.equal((await api.notifyMeta()).stats.sent_today, 0);
 
   await api.setSettings({
@@ -106,5 +106,5 @@ test("the real demo transport supports notification page loading, editing and de
   await api.notifyDeleteChannel(id);
   assert.equal((await api.notifyMeta()).stats.channels, 0);
   assert.deepEqual(Array.from(await api.notifyChannels()), []);
-  await assert.rejects(api.notifyUpdateChannel(id, { enabled: true }), /通知渠道不存在/);
+  await assert.rejects(api.notifyUpdateChannel(id, { enabled: true }), /Notification channel not found/);
 });
