@@ -3,11 +3,11 @@ import packageJson from "../../package.json";
 const currentYear = new Date().getFullYear();
 
 export const APP_CONFIG = {
-  name: "ARTEX",
+  name: "AMTRAK",
   version: packageJson.version,
-  copyright: `© ${currentYear}, ARTEX.`,
+  copyright: `© ${currentYear}, AMTRAK.`,
   meta: {
-    title: "ARTEX — 自主渗透测试控制台",
-    description: "LLM 驱动的自主渗透测试系统控制台",
+    title: "AMTRAK — Autonomous Penetration Testing Platform",
+    description: "AI-driven autonomous penetration testing system with a Go engine, MITM traffic proxy, human-in-the-loop approvals, and native Grok, Claude, and OpenAI support.",
   },
 };
