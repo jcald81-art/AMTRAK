@@ -29,7 +29,7 @@ export function createMockSchedules() {
     }
     const match = /^\/schedules\/(\d+)(?:\/(metadata|remark|pause|resume|run-now))?$/.exec(path);
     const item = match ? schedules.get(Number(match[1])) : undefined;
-    if (!item) throw new Error("计划不存在");
+    if (!item) throw new Error("Schedule not found");
     const action = match?.[2];
     if (!action && method === "GET") return structuredClone(item);
     if (!action && method === "DELETE") {
@@ -43,7 +43,7 @@ export function createMockSchedules() {
     }
     if (action === "metadata" && method === "PATCH") {
       const name = String(body.name ?? "").trim();
-      if (!name) throw new Error("计划名称不能为空");
+      if (!name) throw new Error("Schedule name cannot be empty");
       item.name = name;
       return structuredClone(item);
     }
@@ -57,46 +57,50 @@ export function createMockSchedules() {
       record(item, item.status);
       return { ok: true, enabled: item.enabled };
     }
-    if (action === "run-now" && method === "POST") throw new Error("演示模式不会执行计划任务，请在实际部署中运行");
-    throw new Error("计划不存在");
+    if (action === "run-now" && method === "POST")
+      throw new Error("Demo mode does not execute scheduled tasks; run in a live deployment");
+    throw new Error("Schedule not found");
   };
 }
 
 function normalize(body: Record<string, unknown>, validTaskIDs: Set<number>): Omit<TaskSchedule, "id" | "status"> {
   const name = String(body.name ?? "").trim();
-  if (!name) throw new Error("计划名称不能为空");
+  if (!name) throw new Error("Schedule name cannot be empty");
   const timezone_mode = body.timezone_mode ?? "beijing";
-  if (timezone_mode !== "beijing" && timezone_mode !== "system") throw new Error("时区必须选择北京时间或系统当前时区");
+  if (timezone_mode !== "beijing" && timezone_mode !== "system")
+    throw new Error("Timezone must be Beijing Time or System Timezone");
   const schedule_type = body.schedule_type;
-  if (schedule_type !== "once" && schedule_type !== "weekly") throw new Error("规则必须选择一次性或按周");
+  if (schedule_type !== "once" && schedule_type !== "weekly")
+    throw new Error("Schedule type must be once or weekly");
   const start_time = String(body.start_time ?? "");
   const end_time = String(body.end_time ?? "");
   const clock = /^([01]\d|2[0-3]):[0-5]\d$/;
-  if (!clock.test(start_time)) throw new Error("开始时间格式不正确，请使用 HH:MM");
-  if (end_time && end_time !== "24:00" && !clock.test(end_time)) throw new Error("结束时间格式不正确，请使用 HH:MM");
+  if (!clock.test(start_time)) throw new Error("Invalid start time format; use HH:MM");
+  if (end_time && end_time !== "24:00" && !clock.test(end_time))
+    throw new Error("Invalid end time format; use HH:MM");
   const run_date = schedule_type === "once" ? String(body.run_date ?? "") : "";
   const end_date = schedule_type === "once" ? String(body.end_date ?? "") : "";
   const weekdays = schedule_type === "weekly" && Array.isArray(body.weekdays) ? [...body.weekdays] : [];
   if (schedule_type === "once") {
-    if (!validDate(run_date)) throw new Error("开始日期格式不正确");
-    if (end_date && !validDate(end_date)) throw new Error("截止日期格式不正确");
-    if (end_date && end_date < run_date) throw new Error("截止日期不能早于开始日期");
+    if (!validDate(run_date)) throw new Error("Invalid start date format");
+    if (end_date && !validDate(end_date)) throw new Error("Invalid end date format");
+    if (end_date && end_date < run_date) throw new Error("End date cannot be earlier than start date");
     if (end_date === run_date && end_time && end_time !== "24:00" && end_time <= start_time)
-      throw new Error("同一天的结束时间必须晚于开始时间");
+      throw new Error("End time must be later than start time on the same day");
   } else {
-    if (!weekdays.length) throw new Error("按周计划至少选择一天");
+    if (!weekdays.length) throw new Error("Select at least one day for a weekly schedule");
     if (
       weekdays.some((day) => !Number.isInteger(day) || day < 1 || day > 7) ||
       new Set(weekdays).size !== weekdays.length
     )
-      throw new Error("星期选择必须为周一至周日且不能重复");
+      throw new Error("Weekdays must be unique values from Monday (1) to Sunday (7)");
     weekdays.sort((left, right) => left - right);
   }
   const task_ids = Array.isArray(body.task_ids) ? [...body.task_ids] : [];
-  if (task_ids.length > 100) throw new Error("最多选择100个任务");
+  if (task_ids.length > 100) throw new Error("Select at most 100 tasks");
   if (task_ids.some((id) => !Number.isSafeInteger(id) || id < 1) || new Set(task_ids).size !== task_ids.length)
-    throw new Error("绑定任务编号无效或重复");
-  for (const id of task_ids) if (!validTaskIDs.has(id)) throw new Error(`任务 #${id} 不存在`);
+    throw new Error("Invalid or duplicate task IDs");
+  for (const id of task_ids) if (!validTaskIDs.has(id)) throw new Error(`Task #${id} not found`);
   return {
     name,
     enabled: body.enabled !== false,
