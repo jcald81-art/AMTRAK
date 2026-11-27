@@ -32,15 +32,15 @@ const (
 // errDataSourceUnavailable 是密码相关读操作失败时统一的回复。这些 handler 绝不能
 // 把"读不到"当成"没有设置"：authInit 曾因此在数据库报错时放行，让未认证请求覆盖
 // 掉已有的管理员密码。
-const errDataSourceUnavailable = "数据源暂时不可用，请稍后重试"
+const errDataSourceUnavailable = "The data source is temporarily unavailable. Try again later."
 
-// validatePassword 返回空串表示通过，否则返回可直接展示给用户的中文原因。
+// validatePassword returns a user-facing reason, or an empty string on success.
 func validatePassword(pw string) string {
 	if utf8.RuneCountInString(pw) < minPasswordRunes {
-		return fmt.Sprintf("密码长度至少 %d 位", minPasswordRunes)
+		return fmt.Sprintf("Use at least %d characters for the password.", minPasswordRunes)
 	}
 	if len(pw) > maxPasswordBytes {
-		return fmt.Sprintf("密码长度不能超过 %d 字节", maxPasswordBytes)
+		return fmt.Sprintf("The password cannot exceed %d bytes.", maxPasswordBytes)
 	}
 	return ""
 }
@@ -60,7 +60,7 @@ func loadOrCreateJWTKey(keyDir, dataDir string) ([]byte, error) {
 			if data, rerr := os.ReadFile(legacy); rerr == nil {
 				if werr := os.WriteFile(path, data, 0o600); werr == nil {
 					_ = os.Remove(legacy)
-					log.Printf("[auth] JWT key 已从 %s 迁移到 %s（移出可浏览工作区）", legacy, path)
+					log.Printf("[auth] Moved JWT key from %s to %s, outside the browsable workspace", legacy, path)
 				}
 			}
 		}
@@ -79,7 +79,7 @@ func loadOrCreateJWTKey(keyDir, dataDir string) ([]byte, error) {
 	if err := os.WriteFile(path, buf, 0600); err != nil {
 		return nil, fmt.Errorf("write jwt key: %w", err)
 	}
-	log.Printf("[auth] 新 JWT key 已写入 %s", path)
+	log.Printf("[auth] Wrote new JWT key to %s", path)
 	return buf, nil
 }
 
@@ -126,11 +126,11 @@ func (s *Server) requireAuth(h http.Handler) http.Handler {
 		}
 		tok := extractToken(r)
 		if tok == "" {
-			writeProductError(w, 401, "unauthorized", "未授权", nil)
+			writeProductError(w, 401, "unauthorized", "Unauthorized", nil)
 			return
 		}
 		if !verifyJWT(tok, s.jwtKey) {
-			writeProductError(w, 401, "token_expired", "token 无效或已过期", nil)
+			writeProductError(w, 401, "token_expired", "The token is invalid or has expired.", nil)
 			return
 		}
 		h.ServeHTTP(w, r)
@@ -166,14 +166,14 @@ func (s *Server) authInit(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if existing != "" {
-		writeProductError(w, 403, "password_already_set", "密码已设置", nil)
+		writeProductError(w, 403, "password_already_set", "A password has already been set.", nil)
 		return
 	}
 	var req struct {
 		Password string `json:"password"`
 	}
 	if err := decode(r, &req); err != nil || req.Password == "" {
-		writeProductError(w, 400, "password_required", "密码不能为空", nil)
+		writeProductError(w, 400, "password_required", "Enter a password.", nil)
 		return
 	}
 	if msg := validatePassword(req.Password); msg != "" {
@@ -183,7 +183,7 @@ func (s *Server) authInit(w http.ResponseWriter, r *http.Request) {
 	}
 	hash, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
 	if err != nil {
-		writeProductError(w, 500, "password_hash_failed", "密码加密失败", nil)
+		writeProductError(w, 500, "password_hash_failed", "Could not hash the password.", nil)
 		return
 	}
 	// 用 INSERT ... ON CONFLICT DO NOTHING 而不是 upsert：上面那次 GetSetting 只是
@@ -191,16 +191,16 @@ func (s *Server) authInit(w http.ResponseWriter, r *http.Request) {
 	// 这期间别的请求完全可能先把密码设好，而读检查本身也可能因故障而失效。
 	inserted, err := pg.InsertSettingIfAbsent(authPassKey, string(hash))
 	if err != nil {
-		writeProductError(w, 500, "save_failed", "保存失败: "+err.Error(), nil)
+		writeProductError(w, 500, "save_failed", "Save failed: "+err.Error(), nil)
 		return
 	}
 	if !inserted {
-		writeProductError(w, 403, "password_already_set", "密码已设置", nil)
+		writeProductError(w, 403, "password_already_set", "A password has already been set.", nil)
 		return
 	}
 	tok, err := signJWT(s.jwtKey)
 	if err != nil {
-		writeProductError(w, 500, "token_failed", "token 生成失败", nil)
+		writeProductError(w, 500, "token_failed", "Could not generate a token.", nil)
 		return
 	}
 	writeJSON(w, 200, map[string]any{"token": tok})
@@ -215,7 +215,7 @@ func (s *Server) authChangePassword(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if !verifyJWT(extractToken(r), s.jwtKey) {
-		writeProductError(w, 401, "unauthorized", "未授权", nil)
+		writeProductError(w, 401, "unauthorized", "Unauthorized", nil)
 		return
 	}
 	var req struct {
@@ -223,11 +223,11 @@ func (s *Server) authChangePassword(w http.ResponseWriter, r *http.Request) {
 		NewPassword string `json:"new_password"`
 	}
 	if err := decode(r, &req); err != nil {
-		writeProductError(w, 400, "invalid_request", "请求格式错误", nil)
+		writeProductError(w, 400, "invalid_request", "Invalid request format.", nil)
 		return
 	}
 	if req.NewPassword == "" {
-		writeProductError(w, 400, "new_password_required", "新密码不能为空", nil)
+		writeProductError(w, 400, "new_password_required", "Enter a new password.", nil)
 		return
 	}
 	if msg := validatePassword(req.NewPassword); msg != "" {
@@ -241,20 +241,20 @@ func (s *Server) authChangePassword(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if !ok || hash == "" {
-		writeProductError(w, 403, "password_not_initialized", "密码未初始化，请先设置密码", nil)
+		writeProductError(w, 403, "password_not_initialized", "No password has been set. Set a password first.", nil)
 		return
 	}
 	if err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(req.OldPassword)); err != nil {
-		writeProductError(w, 401, "current_password_incorrect", "当前密码错误", nil)
+		writeProductError(w, 401, "current_password_incorrect", "The current password is incorrect.", nil)
 		return
 	}
 	newHash, err := bcrypt.GenerateFromPassword([]byte(req.NewPassword), bcrypt.DefaultCost)
 	if err != nil {
-		writeProductError(w, 500, "password_hash_failed", "密码加密失败", nil)
+		writeProductError(w, 500, "password_hash_failed", "Could not hash the password.", nil)
 		return
 	}
 	if err := pg.SetSetting(authPassKey, string(newHash)); err != nil {
-		writeProductError(w, 500, "save_failed", "保存失败: "+err.Error(), nil)
+		writeProductError(w, 500, "save_failed", "Save failed: "+err.Error(), nil)
 		return
 	}
 	writeJSON(w, 200, map[string]any{"ok": true})
@@ -271,11 +271,11 @@ func (s *Server) authLogin(w http.ResponseWriter, r *http.Request) {
 		Password string `json:"password"`
 	}
 	if err := decode(r, &req); err != nil {
-		writeProductError(w, 400, "invalid_request", "请求格式错误", nil)
+		writeProductError(w, 400, "invalid_request", "Invalid request format.", nil)
 		return
 	}
 	if req.Username != "ARTEX" {
-		writeProductError(w, 401, "invalid_credentials", "用户名或密码错误", nil)
+		writeProductError(w, 401, "invalid_credentials", "Incorrect username or password.", nil)
 		return
 	}
 	hash, ok, err := pg.GetSetting(authPassKey)
@@ -284,16 +284,16 @@ func (s *Server) authLogin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if !ok || hash == "" {
-		writeProductError(w, 403, "password_not_initialized", "密码未初始化，请先设置密码", nil)
+		writeProductError(w, 403, "password_not_initialized", "No password has been set. Set a password first.", nil)
 		return
 	}
 	if err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(req.Password)); err != nil {
-		writeProductError(w, 401, "invalid_credentials", "用户名或密码错误", nil)
+		writeProductError(w, 401, "invalid_credentials", "Incorrect username or password.", nil)
 		return
 	}
 	tok, err := signJWT(s.jwtKey)
 	if err != nil {
-		writeProductError(w, 500, "token_failed", "token 生成失败", nil)
+		writeProductError(w, 500, "token_failed", "Could not generate a token.", nil)
 		return
 	}
 	writeJSON(w, 200, map[string]any{"token": tok})

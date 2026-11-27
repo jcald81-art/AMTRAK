@@ -54,9 +54,9 @@ export const tasks: Task[] = [
   {
     id: "t-acme-web",
     category_id: 1,
-    category_name: "外部评估",
-    description: "Acme 官网与后台外部渗透（acme.com）",
-    goal: "拿到 acme.com 后台管理权限，确认可读取用户敏感数据。",
+    category_name: "External assessment",
+    description: "External assessment of the Acme website and admin portal (acme.com)",
+    goal: "Assess whether unauthorized admin access to acme.com could expose sensitive user data.",
     status: "running",
     created_at: T("2026-07-24T09:12:00Z"),
     created_unix: 1785489120,
@@ -83,9 +83,9 @@ export const tasks: Task[] = [
   {
     id: "t-acme-api",
     category_id: 2,
-    category_name: "API 专项",
-    description: "api.acme.com 越权与注入测试",
-    goal: "评估 api.acme.com 订单/用户接口的越权(IDOR)与注入风险。",
+    category_name: "API assessment",
+    description: "Authorization and injection assessment for api.acme.com",
+    goal: "Assess object-level authorization and injection risks in the order and user APIs on api.acme.com.",
     status: "running",
     created_at: T("2026-07-25T14:05:00Z"),
     created_unix: 1785592500,
@@ -112,9 +112,9 @@ export const tasks: Task[] = [
   {
     id: "t-shop-pay",
     category_id: 2,
-    category_name: "API 专项",
-    description: "shop.acme.com 支付与订单链路",
-    goal: "评估支付与订单接口的越权、金额篡改与竞态风险。",
+    category_name: "API assessment",
+    description: "Payment and order flows on shop.acme.com",
+    goal: "Assess authorization, amount tampering, and race-condition risks in the payment and order APIs.",
     status: "paused",
     created_at: T("2026-07-22T08:30:00Z"),
     created_unix: 1785313800,
@@ -140,9 +140,9 @@ export const tasks: Task[] = [
   {
     id: "t-vpn-edge",
     category_id: 1,
-    category_name: "外部评估",
-    description: "对外暴露面侦察（VPN / 边界服务）",
-    goal: "识别 acme.com 对外暴露的可利用边界服务。",
+    category_name: "External assessment",
+    description: "External exposure review (VPN and perimeter services)",
+    goal: "Identify vulnerable perimeter services exposed by acme.com.",
     status: "done",
     created_at: T("2026-07-18T08:00:00Z"),
     created_unix: 1784966400,
@@ -172,14 +172,14 @@ export const tasks: Task[] = [
 export const taskCategories: TaskCategory[] = [
   {
     id: 1,
-    name: "外部评估",
+    name: "External assessment",
     task_count: 2,
     created_at: T("2026-07-18T08:00:00Z"),
     updated_at: T("2026-07-25T08:00:00Z"),
   },
   {
     id: 2,
-    name: "API 专项",
+    name: "API assessment",
     task_count: 2,
     created_at: T("2026-07-19T08:00:00Z"),
     updated_at: T("2026-07-24T08:00:00Z"),
@@ -600,7 +600,7 @@ export const findings: Finding[] = [
     id: "f-1",
     assets: [assetRef(18)],
     vulnclass: "SQL Injection",
-    name: "官网搜索接口报错型 SQL 注入",
+    name: "Error-based SQL injection in the website search endpoint",
     severity: "high",
     status: "pending",
     report:
@@ -609,7 +609,7 @@ export const findings: Finding[] = [
     evidence: "GET /search?q=1' AND 1=CONVERT(int,@@version)-- → 返回 MSSQL 版本报错，可读库结构。",
     intent_id: "i-2",
     task_id: "t-acme-web",
-    task_description: "Acme 官网与后台外部渗透",
+    task_description: "External assessment of the Acme website and admin portal",
     ts: T("2026-07-26T01:20:00Z"),
   },
   {
@@ -622,7 +622,7 @@ export const findings: Finding[] = [
     evidence: "将 id=1001 改为 id=1002 返回他人订单（含收货地址、手机号），无归属校验。",
     intent_id: "i-5",
     task_id: "t-acme-api",
-    task_description: "api.acme.com 越权与注入测试",
+    task_description: "Authorization and injection assessment for api.acme.com",
     ts: T("2026-07-26T02:44:00Z"),
   },
   {
@@ -634,7 +634,7 @@ export const findings: Finding[] = [
     summary: "API JWT 使用弱密钥、可离线爆破伪造",
     evidence: "HS256，密钥 'secret'，john 5 秒破解 → 可伪造任意 sub 越权。",
     task_id: "t-acme-api",
-    task_description: "api.acme.com 越权与注入测试",
+    task_description: "Authorization and injection assessment for api.acme.com",
     ts: T("2026-07-26T03:02:00Z"),
   },
   {
@@ -646,7 +646,7 @@ export const findings: Finding[] = [
     summary: "搜索页对 q 参数未转义，反射型 XSS",
     evidence: "q=<script>alert(document.domain)</script> 原样回显于结果标题。",
     task_id: "t-acme-web",
-    task_description: "Acme 官网与后台外部渗透",
+    task_description: "External assessment of the Acme website and admin portal",
     ts: T("2026-07-25T22:10:00Z"),
   },
   {
@@ -658,7 +658,7 @@ export const findings: Finding[] = [
     summary: "www.acme.com 暴露 .git 目录，可还原源码",
     evidence: "GET /.git/HEAD → 200；git-dumper 还原出后端源码与数据库连接串注释。",
     task_id: "t-acme-web",
-    task_description: "Acme 官网与后台外部渗透",
+    task_description: "External assessment of the Acme website and admin portal",
     ts: T("2026-07-25T20:30:00Z"),
   },
   {
@@ -671,7 +671,7 @@ export const findings: Finding[] = [
     evidence: "登录成功，进入管理后台，可管理用户与订单。",
     intent_id: "i-3",
     task_id: "t-acme-web",
-    task_description: "Acme 官网与后台外部渗透",
+    task_description: "External assessment of the Acme website and admin portal",
     ts: T("2026-07-26T03:50:00Z"),
   },
   {
@@ -683,7 +683,7 @@ export const findings: Finding[] = [
     summary: "登录后 next 参数任意跳转",
     evidence: "/login?next=https://evil.example 登录后 302 跳到外站。",
     task_id: "t-acme-web",
-    task_description: "Acme 官网与后台外部渗透",
+    task_description: "External assessment of the Acme website and admin portal",
     ts: T("2026-07-25T19:12:00Z"),
   },
   {
@@ -695,7 +695,7 @@ export const findings: Finding[] = [
     summary: "登录接口无速率限制，可暴力破解",
     evidence: "1000 次/分钟无锁定，无验证码。",
     task_id: "t-acme-web",
-    task_description: "Acme 官网与后台外部渗透",
+    task_description: "External assessment of the Acme website and admin portal",
     ts: T("2026-07-25T18:40:00Z"),
   },
   {
@@ -707,7 +707,7 @@ export const findings: Finding[] = [
     summary: "API 500 返回堆栈，泄露路径与框架版本",
     evidence: "触发 500 返回 Node.js 堆栈，泄露绝对路径与依赖版本。",
     task_id: "t-acme-api",
-    task_description: "api.acme.com 越权与注入测试",
+    task_description: "Authorization and injection assessment for api.acme.com",
     ts: T("2026-07-25T23:05:00Z"),
   },
   {
@@ -719,7 +719,7 @@ export const findings: Finding[] = [
     summary: "shop 使用存在已知 RCE 的老版本组件",
     evidence: "指纹识别到组件 v2.3.1，对应 CVE-2024-xxxx 反序列化 RCE。",
     task_id: "t-shop-pay",
-    task_description: "shop.acme.com 支付与订单链路",
+    task_description: "Payment and order flows on shop.acme.com",
     ts: T("2026-07-23T15:00:00Z"),
   },
   // ── 外网→内网纵深链路上的高危发现（active task）──
@@ -732,14 +732,14 @@ export const findings: Finding[] = [
     evidence: "git-dumper 还原 www.acme.com/.git 得到 config.php，内含明文 DB 口令，后续被证实可在内网复用。",
     intent_id: "ig",
     task_id: "t-acme-web",
-    task_description: "Acme 官网与后台外部渗透",
+    task_description: "External assessment of the Acme website and admin portal",
     ts: T("2026-07-25T20:36:00Z"),
   },
   {
     id: "f-12",
     assets: [assetRef(4)],
     vulnclass: "Deserialization RCE",
-    name: "shop 商城 Fastjson 反序列化远程命令执行",
+    name: "Remote command execution through Fastjson deserialization in the storefront",
     severity: "critical",
     status: "confirmed",
     report:
@@ -749,7 +749,7 @@ export const findings: Finding[] = [
       "POST /api/import 提交 JNDI payload（@type:JdbcRowSetImpl）→ 回连 dnslog 并落地反弹 shell（www-data@dmz-web01）。",
     intent_id: "i7",
     task_id: "t-acme-web",
-    task_description: "Acme 官网与后台外部渗透",
+    task_description: "External assessment of the Acme website and admin portal",
     ts: T("2026-07-25T15:40:00Z"),
   },
   {
@@ -763,7 +763,7 @@ export const findings: Finding[] = [
       "sudo -l 显示 (ALL) NOPASSWD: /usr/bin/python3 → sudo python3 -c 'os.setuid(0);os.system(\"/bin/sh\")' 直接拿 root。",
     intent_id: "i8",
     task_id: "t-acme-web",
-    task_description: "Acme 官网与后台外部渗透",
+    task_description: "External assessment of the Acme website and admin portal",
     ts: T("2026-07-25T16:20:00Z"),
   },
   {
@@ -776,7 +776,7 @@ export const findings: Finding[] = [
     evidence: "dmz-web01 第二网卡在 10.10.10.0/24，可从 DMZ 直达域控/文件服务器/Jenkins，越过网络分区。",
     intent_id: "i9",
     task_id: "t-acme-web",
-    task_description: "Acme 官网与后台外部渗透",
+    task_description: "External assessment of the Acme website and admin portal",
     ts: T("2026-07-25T21:00:00Z"),
   },
   {
@@ -790,7 +790,7 @@ export const findings: Finding[] = [
       "GET /script 无需登录即可执行 Groovy：'whoami'.execute().text → SYSTEM；并从凭据库导出域账号 acme\\svc_deploy。",
     intent_id: "i11",
     task_id: "t-acme-web",
-    task_description: "Acme 官网与后台外部渗透",
+    task_description: "External assessment of the Acme website and admin portal",
     ts: T("2026-07-25T21:50:00Z"),
   },
   {
@@ -803,14 +803,14 @@ export const findings: Finding[] = [
     evidence: "GetUserSPNs 请求 svc_sql 的 TGS，hashcat -m 13100 离线破出 Sql@2020，该账号属于 SQL 管理组。",
     intent_id: "i12",
     task_id: "t-acme-web",
-    task_description: "Acme 官网与后台外部渗透",
+    task_description: "External assessment of the Acme website and admin portal",
     ts: T("2026-07-25T23:20:00Z"),
   },
   {
     id: "f-17",
     assets: [assetRef(20)],
     vulnclass: "Domain Compromise",
-    name: "内网域控 DC01 完全控制（Domain Admin）",
+    name: "Full control of internal domain controller DC01 (Domain Admin)",
     severity: "critical",
     status: "confirmed",
     report:
@@ -820,7 +820,7 @@ export const findings: Finding[] = [
       "svc_deploy 属于 Domain Admins，psexec.py 以其登录 DC01 得 SYSTEM，secretsdump 导出全域 NTLM 哈希（含 krbtgt），完成靶标控制。",
     intent_id: "i13",
     task_id: "t-acme-web",
-    task_description: "Acme 官网与后台外部渗透",
+    task_description: "External assessment of the Acme website and admin portal",
     ts: T("2026-07-26T00:20:00Z"),
   },
 ];
